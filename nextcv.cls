@@ -1,42 +1,30 @@
 %%%%%%%%%%%%%%%%%
-% This is altacv.cls (v1.7.1, 25 Aug 2023) written by
-% LianTze Lim (liantze@gmail.com).
-%
+%% NextCV - v1.0.1 - Naveen Dharmathunga (dasheenaveen@outlook.com)
+%% This is an upgraded version of altacv.cls (v1.7.1) written by LianTze Lim.
+%% ================================================================================
 %% It may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
 %% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    http://www.latex-project.org/lppl.txt
+%% The latest version of this license is in http://www.latex-project.org/lppl.txt
 %% and version 1.3 or later is part of all distributions of LaTeX
 %% version 2003/12/01 or later.
-%%
-%%
-% Contributions:
-% - https://github.com/akreuzer Added ragged2e option (5 Nov 2018)
-% - https://github.com/stefanogermano Fixed bad boxes and undefined font shape (July 2018)
-% - https://github.com/foohyfooh Fixed blank spaces in \cvevent and bad link in README.md (June 2018)
-% - https://github.com/logological Remove redundant hyperref and typos (Apr 2021)
-
 %%%%%%%%%%%%%%%%
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{altacv}[2023/08/25 AltaCV v1.7.1, yet another alternative class for a resume/curriculum vitae.]
 
-%% v1.1: Optionally load academicons
-%% v1.4: Nope, academicons is unnecessary; fontawesome5 has \faOrcid.
-\DeclareOption{academicons}{\ClassWarning{altacv}{academicons option is now obsolete and unnecessary.}}
-%% v1.1.3: Choice of round/square photo
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{nextcv}[2024/07/29 NextCV v1.0.1, The template class for a next generation resume/curriculum vitae.]
+
+%% Choice of round/square photo
 \newif\if@normalphoto
 \DeclareOption{normalphoto}{\@normalphototrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \newif\if@raggedtwoe
 \DeclareOption{ragged2e}{\@raggedtwoetrue}
-%% v1.3: load hyperref for clickable hyperlinks
+%% load hyperref for clickable hyperlinks
 \newif\if@withhyper
 \DeclareOption{withhyper}{\@withhypertrue}
 \ProcessOptions\relax
 
 \LoadClass{extarticle}
-%% v1.3.2 Hopefully this helps make the PDF
 %% file more 'friendly' with copy-paste etc
 \RequirePackage{etoolbox}
 \RequirePackage{accsupp}
@@ -47,7 +35,7 @@
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
 
-%% v1.1.5: added for convenience
+%% added for convenience
 \newif\ifxetexorluatex
 \ifxetex
   \xetexorluatextrue
@@ -62,7 +50,7 @@
 \ifxetexorluatex
   \RequirePackage{fontspec}
 \else
-  %% v1.3.2 attempts to make ligatures
+  %% attempts to make ligatures
   %% copy-paste as normal characters
   \RequirePackage{cmap}
   \RequirePackage[utf8]{inputenc}
@@ -125,7 +113,7 @@
   \begin{adjustwidth}{}{\dimexpr-\marginparwidth-\marginparsep\relax}}
     {\end{adjustwidth}}
 
-%% v1.3.1 \detokenize will break UTF-8 in pdflatex
+%% \detokenize will break UTF-8 in pdflatex
 %% Using alternative from https://tex.stackexchange.com/a/530911/226
 \newcommand{\utffriendlydetokenize}[1]{%
 \scantokens{%
@@ -144,7 +132,7 @@
 
 \ExplSyntaxOn
 %% The PDF/A standard requires that document metadata be added
-% Define a command to set PDF metadata including keywords as a list
+%% Define a command to set PDF metadata including keywords as a list
 \NewDocumentCommand{\setpdfmetadata}{m m m m}{%
   \AtBeginDocument{%
     \hypersetup{%
@@ -156,21 +144,18 @@
   }%
 }
 
-% Helper function to format each keyword (removes leading/trailing spaces)
+%% Helper function to format each keyword (removes leading/trailing spaces)
 \newcommand{\FormatKeyword}[1]{%
   \pdfstringdefDisableCommands{\def\Temp{#1}}%
   \Temp%
 }
 
-% Usage example:
+%% Usage example:
 % \setpdfmetadata{me}{mytitle}{subject}{Green Networking, Mobile Cloud, Network Coding, Energy}
 
-%% v1.3: Incorporating hyperlinks
-%% v1.3.1: using \unfriendlydetokenize to avoid breaking unicode
-%% v1.6: Use accsupp so that when copying/pasting the icon from PDF to a text
-%%       file, the icon name is pasted
-%% v1.7: Some tweaks/corrections so that accsupp is for icons only
-%% v1.7.1: Bugfix to support some symbol commands e.g. academicons commands 
+%% Incorporating hyperlinks
+%% using \unfriendlydetokenize to avoid breaking unicode
+%% Use accsupp so that when copying/pasting the icon from PDF to a text file, the icon name is pasted
 \NewDocumentCommand{\printinfo}{m m o}{%
   \IfNoValueTF{#3}{%
     \mbox{\textcolor{accent}%
@@ -191,8 +176,8 @@
 }%
 
 
-%% v1.3: Exploring convenient creation of fields
-%% v1.6: Add starred mode to create \printinfo with full URL
+%% Exploring convenient creation of fields
+%% Added starred mode to create \printinfo with full URL
 \NewDocumentCommand{\NewInfoField}{s m m o}{%
   \IfBooleanF{#1}{
     \IfNoValueF{#4}{\csdef{#2 hyperprefix}{#4}}%
@@ -232,16 +217,16 @@
 \NewInfoField{twitter}{\faTwitter}[https://twitter.com/]
 \NewInfoField{linkedin}{\faLinkedin}[https://linkedin.com/in/]
 \NewInfoField{github}{\faGithub}[https://github.com/]
-% v1.?? Use fontawesome5 for Orcid symbol
+% Use fontawesome5 for Orcid symbol
 \NewInfoField{orcid}{\faOrcid}[https://orcid.org/]
 \NewInfoField{location}{\cvLocationMarker}
 
-% v1.2: Support for multiple photos
-\newlength{\altacv@photos@width}
-\newlength{\altacv@photo@diam@left}
-\newlength{\altacv@photo@diam@right}
-\def\altacv@left@photos{}
-\def\altacv@right@photos{}
+% Support for multiple photos
+\newlength{\nextcv@photos@width}
+\newlength{\nextcv@photo@diam@left}
+\newlength{\nextcv@photo@diam@right}
+\def\nextcv@left@photos{}
+\def\nextcv@right@photos{}
 
 \newcommand{\@makeaphoto}[2]{%
   \begin{minipage}{#1}%
@@ -253,27 +238,27 @@
   \end{minipage}%
 }
 
-\newcommand{\altacv@add@photo@left}[1]{%
-  \appto{\altacv@left@photos}{%
-    \@makeaphoto{\altacv@photo@diam@left}{#1}\hspace{1ex}%
+\newcommand{\nextcv@add@photo@left}[1]{%
+  \appto{\nextcv@left@photos}{%
+    \@makeaphoto{\nextcv@photo@diam@left}{#1}\hspace{1ex}%
   }%
-  \addtolength{\altacv@photos@width}{\altacv@photo@diam@left}%
-  \addtolength{\altacv@photos@width}{1ex}%
+  \addtolength{\nextcv@photos@width}{\nextcv@photo@diam@left}%
+  \addtolength{\nextcv@photos@width}{1ex}%
 }
-\newcommand{\altacv@add@photo@right}[1]{%
-  \appto{\altacv@right@photos}{%
-    \@makeaphoto{\altacv@photo@diam@right}{#1}\hspace{1ex}%
+\newcommand{\nextcv@add@photo@right}[1]{%
+  \appto{\nextcv@right@photos}{%
+    \@makeaphoto{\nextcv@photo@diam@right}{#1}\hspace{1ex}%
   }%
-  \addtolength{\altacv@photos@width}{\altacv@photo@diam@right}%
-  \addtolength{\altacv@photos@width}{1ex}%
+  \addtolength{\nextcv@photos@width}{\nextcv@photo@diam@right}%
+  \addtolength{\nextcv@photos@width}{1ex}%
 }
 \newcommand{\photoL}[2]{%
-  \setlength{\altacv@photo@diam@left}{#1}%
-  \forcsvlist{\altacv@add@photo@left}{#2}%
+  \setlength{\nextcv@photo@diam@left}{#1}%
+  \forcsvlist{\nextcv@add@photo@left}{#2}%
 }
 \newcommand{\photoR}[2]{%
-  \setlength{\altacv@photo@diam@right}{#1}%
-  \forcsvlist{\altacv@add@photo@right}{#2}%
+  \setlength{\nextcv@photo@diam@right}{#1}%
+  \forcsvlist{\nextcv@add@photo@right}{#2}%
 }
 \let\photo\photoR
 
@@ -285,8 +270,8 @@
 
 \newcommand{\makecvheader}{%
   \begingroup
-  \altacv@left@photos\hfill%
-  \begin{minipage}{\dimexpr\linewidth-\altacv@photos@width}%
+  \nextcv@left@photos\hfill%
+  \begin{minipage}{\dimexpr\linewidth-\nextcv@photos@width}%
     \raggedright%
     {\namefont\color{name}\MakeUppercase{\@name}\par}
     \medskip
@@ -294,7 +279,7 @@
     \medskip
     {\personalinfofont\@personalinfo\par}
   \end{minipage}\hfill%
-  \altacv@right@photos\par%
+  \nextcv@right@photos\par%
   \endgroup\medskip
 }
 
@@ -312,8 +297,6 @@
   {\color{subheading}\cvsubsectionfont{#1}\par}\medskip
 }
 
-% v1.1.4: fixes inconsistent font size
-% v1.7: adds accsupp ActualText for location and date markers
 \newcommand{\cvevent}[4]{%
   {\large\color{emphasis}#1\par}
   \smallskip\normalsize
@@ -333,7 +316,6 @@
   \medskip\normalsize
 }
 
-% v1.7: adds accsupp for the icon as well
 \newcommand{\cvachievement}[3]{%
   \begin{tabularx}{\linewidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
     \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={#1: }}#1\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#2} \\
@@ -346,7 +328,7 @@
   \tikz[baseline]\node[anchor=base,draw=body!30,rounded corners,inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
 }
 
-% v1.6: Use accsupp so that the actual numeric value is copied/pasted
+% Use accsupp so that the actual numeric value is copied/pasted
 %       and also support 0.5, 1.5, 2.5, 3.5, 4.5
 \newcommand{\cvskill}[2]{%
 \textcolor{emphasis}{\textbf{#1}}\hfill
@@ -427,11 +409,11 @@
 
 \newenvironment{cvcolumn}[1]{\begin{minipage}[t]{#1}\raggedright}{\end{minipage}}
 
-% v1.5 Move biblatex-related code to separate .cfg file
+% Move biblatex-related code to separate .cfg file
 % so that it's easier to change and customise the style for
 % publication lists
 
-% v1.1.2: make it easier to add a sidebar aligned with top of next page
+% make it easier to add a sidebar aligned with top of next page
 \RequirePackage{afterpage}
 \newcommand{\addsidebar}[2][]{\marginpar{%
     \ifstrequal{#1}{}{}{\vspace*{#1}}%
@@ -439,7 +421,7 @@
 }
 \newcommand{\addnextpagesidebar}[2][]{\afterpage{\addsidebar[#1]{#2}}}
 
-% v1.6.5 But provide for ability to highlight names in publication list
+% But provide for ability to highlight names in publication list
 \RequirePackage{pgffor}
 \def\my@namelist{}
 \newcommand{\mynames}[1]{\def\my@namelist{#1}}
