@@ -8,6 +8,9 @@
 %% The latest version of this license is in http://www.latex-project.org/lppl.txt
 %% and version 1.3 or later is part of all distributions of LaTeX
 %% version 2003/12/01 or later.
+%% ================================================================================
+%% Additionally, this derived work is licensed under the MIT License.
+%% See LICENSE file in the root directory for more information.
 %%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
