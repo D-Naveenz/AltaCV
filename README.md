@@ -96,7 +96,7 @@ NextCV is a modern and customizable LaTeX class for creating beautiful and profe
 
 ### Built With
 
-* [![LaTeX][LaTeX]][Latex-url]
+[![LaTeX][latex-shield]][latex-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -348,7 +348,7 @@ Project Link: [https://github.com/D-Naveenz/NextCV](https://github.com/D-Naveenz
 * [Latex Team](https://www.latex-project.org/about/team/)
 * [Img Shields](https://shields.io)
 * [Font Awesome](https://fontawesome.com)
-* [LianTze Lim](https://github.com/liantze)(Author of AltaCV)
+* [LianTze Lim](https://github.com/liantze) (Author of AltaCV)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -368,5 +368,5 @@ Project Link: [https://github.com/D-Naveenz/NextCV](https://github.com/D-Naveenz
 [license-url]: https://github.com/D-Naveenz/NextCV/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/dasheewd/
-[LaTeX]: (https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
+[latex-shield]: https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white
 [Latex-url]: https://www.latex-project.org/
