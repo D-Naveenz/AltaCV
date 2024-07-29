@@ -1,54 +1,156 @@
-# AltaCV, yet another LaTeX CV/Résumé class
-
-v1.7.1 (25 Aug 2023), by LianTze Lim (liantze@gmail.com)
-
-* v1.7 (9 Aug 2023) changes:
-  - `\itemmarker` and `\ratingmarker` renamed to `\cvItemMarker` and `\cvRatingMarker`
-  - Added `\cvLocationMarker` and `\cvDateMarker` so that these icons in `\cvevent`
-    can be re-defined
-  - Added `\locationname` and `\datename` for replacement text of the location and date
-    markers in `\cvevent`
-  - Other tweaks with `accsupp` (with another bugfix in v1.7.1.)
-* Added `\mynames{...}` to specify names to be highlighted in the publication list on 3 Nov 2022
-* Starred `\NewInfoField*` command to handle Mastodon; Icons, `\cvskills`, `\wheelchart` have "copyable" text values; `\cvskill` supports numerical values {0.5, 1, ..., 4.5, 5} on 21 May 2021
-* Moved `biblatex`-related code to `*.cfg` files for easier edit on 8 May 2021
-* Removed dependency on `academicons` on 12 Apr 2021
-* Clickable hyperlinked info fields added on 10 May 2020
-* Sample file with new `paracol` layout added on 2 February 2020
-
-(Thanks to [Nur](https://github.com/nurh) for the name.)
-
-It all started with this:
-
-[<img src="tweet-that-started-this.png" width="500px">](https://twitter.com/Leonduck/status/764281546408923136)
-
-Leonardo was talking about a [résumé of Marissa Mayer that Business Insider put together](http://www.businessinsider.my/a-sample-resume-for-marissa-mayer-2016-7/) using [enhancv.com](https://enhancv.com).
-I _knew_ I had to do something about it. And so AltaCV was born.
-
-## Samples
-
-This is how the re-created résumé looks like ([view/open on Overleaf](https://www.overleaf.com/latex/examples/recreating-business-insiders-cv-of-marissa-mayer-using-altacv/gtqfpbwncfvp)):
-
-<img src="mmayer.png" alt="Marissa Mayer's résumé, re-created with AltaCV" width="600px">
-
-Though if you're creating your own CV/résumé, you'd probably prefer using the basic template ([view/open on Overleaf](https://www.overleaf.com/latex/templates/altacv-template/trgqjpwnmtgv)):
-
-<img src="sample.png" alt="sample barebones AltaCV template" width="600px">
+<a id="readme-top"></a>
 
 
-## Requirements and Compilation
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-* pdflatex + biber + pdflatex
-* AltaCV uses [`fontawesome5`](http://www.ctan.org/pkg/fontawesome5).
+
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <h3 align="center">Best-README-Template</h3>
+
+  <p align="center">
+    The template class for a next generation resume/curriculum vitae.
+    <br />
+    <br />
+    <a href="https://github.com/D-Naveenz/NextCV">Docs</a>
+    ·
+    <a href="https://github.com/D-Naveenz/NextCV/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    ·
+    <a href="https://github.com/D-Naveenz/NextCV/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+  </p>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#prerequisites">Requirements and Compilation</a></li>
+        <li><a href="#template-file">Template file</a></li>
+        <li><a href="#clickable-info-fields">Clickable Info fields</a></li>/'
+        <li><a href="#new-information-fields">New Information Fields</a></li>
+        <li><a href="#configurable-colours">Configurable colours</a></li>
+        <li><a href="#configurable-fonts">Configurable fonts</a></li>
+        <li><a href="#configurable-icons">Configurable icons</a></li>
+        <li><a href="#is-this-template-ats-friendly">Is this template ATS-friendly?</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+NextCV is a modern and customizable LaTeX class for creating beautiful and professional resumes or CVs. This class is an upgraded version of the [AltaCV](https://github.com/liantze/AltaCV) (v1.7.1) originally written by LianTze Lim. The upgrades and improvements have been implemented by Naveen Dharmathunga.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Features
+* Easy to customize and extend
+* Supports both round and square photos
+* Hyperlink support for email, phone, LinkedIn, GitHub, etc.
+* Beautiful section and subsection formatting
+* Skill rating with customizable markers
+* Option to use different fonts and colors
+
+
+
+### Built With
+
+[![LaTeX][latex-shield]][latex-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Getting Started
+
+### Prerequisites
+
+In **Windows**,
+* [MikeTex](https://miktex.org/download)
+* VS Code (preferable)
+  * Latex Workshop extention
+  * [Perl](https://strawberryperl.com/)
+
+
+
+### Installation
+
+* Download the repository:
+  ```sh
+  git clone https://github.com/D-Naveenz/NextCV
+  ```
+* Make a copy of these files into your project
+  * `nextcv.cls`
+  * `template.tex`
+  * `Globe_High.png`
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+---
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+### Requirements and Compilation
+
+* Use `latexmk` *(or `pdflatex + biber + pdflatex`)*
+* NextCV uses [`fontawesome5`](http://www.ctan.org/pkg/fontawesome5).
 * Use the `normalphoto` option to get normal (i.e. non-circular) photos.
-* As of v1.2 you can add multiple photos on the left or right: `\photoL{2cm}{logo1}` and `\photoR{2.5cm}{logo2,photo}`. (`\photo` will work like `\photoR`.) Separate your image filenames with commas _without_ spaces.
+* You can add multiple photos on the left or right: `\photoL{2cm}{logo1}` and `\photoR{2.5cm}{logo2,photo}`. (`\photo` will work like `\photoR`.) Separate your image filenames with commas _without_ spaces.
 * Use the `ragged2e` option to activate hyphenations while keeping text left-justified; line endings will thus be less jagged and more aesthetically pleasing.
-* As of v1.3 the `withhyper` document class option will make the "personal info" fields into clickable hyperlinks (where it makes sense). See below for more details.
+* The `withhyper` document class option will make the "personal info" fields into clickable hyperlinks (where it makes sense). See below for more details.
 * Can now be compiled with pdflatex, XeLaTeX and LuaLaTeX!
   * Note that to compile with XeLaTeX, you should use a command line as follows, per [the `pdfx` documentation](http://mirrors.ctan.org/macros/latex/contrib/pdfx/pdfx.pdf): `xelatex -shell-escape -output-driver="xdvipdfmx -z 0" sample.tex`
 * The samples here use the [Lato](http://www.latofonts.com/lato-free-fonts/) and [Roboto Slab fonts](https://github.com/googlefonts/robotoslab). Feel free to use a different typeface package instead—often a different typeface will change the entire CV's feel.
 
-## `sample.tex` ##
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Template file
 
 This file was first created as `sample-alt.tex` on 2 Feb 2020. **It is the default sample LaTeX file since 10 May 2020.**
 
@@ -76,7 +178,11 @@ You can also use `\swithcolumn*` for "synchronising" the columns, as well as oth
 
 **You do not need use the `fullwidth` environment nor use optional arguments with `\cvsection` with this new template.**
 
-## Clickable Info fields
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Clickable Info fields
 
 As of v1.3, the `withhyper` document class option will load the `hyperref` package, and make fields in the personal detail fields into clickable hyperlinks (where it makes sense anyway).
 
@@ -90,8 +196,11 @@ If your homepage doesn't use HTTPS yet, or if you want to use a different symbol
 \renewcommand{\homepagesymbol}{\faLink}
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## New Information Fields ####
+
+
+### New Information Fields
 
 I've decided against adding definitions for too many fields and symbols in the `.cls` itself; otherwise we'll have all possible platforms in the world (and more services are born everyday!) within `altacv.cls` before we know it.
 
@@ -127,8 +236,11 @@ then you can use `\mastodon` with TWO arguments where the 2nd argument is the fu
 \mastodon{@username@instance}{https://instance.url/@username}
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Configurable colours
+
+
+### Configurable colours
 
 Use `\colorlet` or `\definecolor` to change these; see examples 
 in preamble of `sample.tex`.
@@ -141,7 +253,11 @@ in preamble of `sample.tex`.
 * `name`
 * `tagline`
 
-## Configurable fonts
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Configurable fonts
 
 Use `\renewcommand` to change these; see examples in preamble of
 `sample.tex`.
@@ -151,7 +267,11 @@ Use `\renewcommand` to change these; see examples in preamble of
 * `\cvsectionfont`
 * `\cvsubsectionfont`
 
-## Configurable icons
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Configurable icons
 
 Use `\renewcommand` to change these; see examples in preamble of
 `sample.tex`.
@@ -160,8 +280,11 @@ Use `\renewcommand` to change these; see examples in preamble of
 * `\cvDateMarker` (for date in `\cvevent`)
 * `\cvLocationMarker` (for location in `\cvevent` and `\location`)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Is this template ATS-friendly?
+
+
+### Is this template ATS-friendly?
 There is some discussion about this in issue #76. No actual claims are made, because we don't really know how each ATS system works. But this template uses `accsupp` to add replacement text for the icons, which may help — e.g. the `\faGithub` icon rendered in the PDF would copy-and-paste from Acrobat Reader, as exactly the text `\faGithub`. 
 
 You could try running `pdftotext -raw sample.pdf` to view the text-only version of the CV, with the columnar layout removed.
@@ -175,36 +298,75 @@ In particular `\locationname` and `\datename` hold the replacement text for the 
 \renewcommand{\datename}{Fecha}
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ---
 
-## `legacy/sample-old.tex` (for historical record only)
 
-This was the original sample template file until 5 May 2020. The right sidebar is actually a _`marginpar`_, so it doesn't support footnote and cannot automatically break across pages if it's too long. You would need to split your right sidebar contents into separate files e.g. `p1sidebar.tex` and `p2sidebar.tex`, and insert them as the optional argument of the `\cvsection{...}` that you want to align them with:
 
-```latex
-\cvsection[p1sidebar]{Experience}
-...
-... END OF FIRST PAGE OF YOUR CV ...
-\cvsection[page2sidebar]{Publications}
-...
-```
+<!-- CONTRIBUTING -->
+## Contributing
 
-This assumes that the next page's main column would start immediately with a `\cvsection`, so that the top of your right sidebar contents also appear at the top of the page. Now if the _next_ page doesn't start with a `\cvsection` but you'd still like to add a sidebar, then use this command on the _current_ page to add it. The optional argument lets you pull up the sidebar a bit so that it looks aligned with the top of the main column:
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-```latex
-\addnextpagesidebar[-1ex]{page3sidebar}
-```
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-If you want to change the left and right columns' widths, you'll need to tinker with the `right` (distance from paper's right edge until the main column's right edge) and `marginparwidth` (width of the right sidebar) options in the `\geometry` line. For example, to make the right sidebar wider by 2cm, you could use
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-```latex
-%% original was right=9cm, marginparwidth=6.8cm
-\geometry{left=1cm,right=11cm,marginparwidth=8.8cm,marginparsep=1.2cm,top=1cm,bottom=1cm}
-```
-as well as doing a bit of arithmetic when you're making the header to get it full-width, i.e. reducing the sidebar by 2cm and extending the main column by 2cm.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```latex
-\begin{adjustwidth}{}{-10cm}  %% original was -8cm
-\makecvheader
-\end{adjustwidth}
-```
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Naveen Dharmathunga - [@XerDuke](https://x.com/dharmathunga) - dasheenaveen@outlook.com
+
+Project Link: [https://github.com/D-Naveenz/NextCV](https://github.com/D-Naveenz/NextCV)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* [Latex Team](https://www.latex-project.org/about/team/)
+* [Img Shields](https://shields.io)
+* [Font Awesome](https://fontawesome.com)
+* [LianTze Lim](https://github.com/liantze) (Author of AltaCV)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/D-Naveenz/NextCV.svg?style=for-the-badge
+[contributors-url]: https://github.com/D-Naveenz/NextCV/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/D-Naveenz/NextCV.svg?style=for-the-badge
+[forks-url]: https://github.com/D-Naveenz/NextCV/network/members
+[stars-shield]: https://img.shields.io/github/stars/D-Naveenz/NextCV.svg?style=for-the-badge
+[stars-url]: https://github.com/D-Naveenz/NextCV/stargazers
+[issues-shield]: https://img.shields.io/github/issues/D-Naveenz/NextCV.svg?style=for-the-badge
+[issues-url]: https://github.com/D-Naveenz/NextCV/issues
+[license-shield]: https://img.shields.io/github/license/D-Naveenz/NextCV.svg?style=for-the-badge
+[license-url]: https://github.com/D-Naveenz/NextCV/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/dasheewd/
+[latex-shield]: https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white
+[Latex-url]: https://www.latex-project.org/
