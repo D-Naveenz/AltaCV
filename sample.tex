@@ -14,9 +14,12 @@
 %% Use the "normalphoto" option if you want a normal photo instead of cropped to a circle
 % \documentclass[10pt,a4paper,normalphoto]{altacv}
 
+\DocumentMetadata{pdfstandard=A-2a, pdfversion=1.7, lang=en}
 \documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}
 %% AltaCV uses the fontawesome5 and packages.
 %% See http://texdoc.net/pkg/fontawesome5 for full list of symbols.
+
+\setpdfmetadata{me}{mytitle}{subject}{Green Networking, Mobile Cloud, Network Coding, Energy}
 
 % Change the page layout if you need to
 \geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
@@ -89,10 +92,10 @@
 %% Use (and optionally edit if necessary) this .tex if you
 %% want an originally numerical reference style like IEEE
 %% for your publication list
-\input{pubs-num.cfg}
+%% \input{pubs-num.cfg}
 
 %% sample.bib contains your publications
-\addbibresource{sample.bib}
+%% \addbibresource{sample.bib}
 
 \begin{document}
 \name{Your Name Here}
@@ -105,7 +108,7 @@
   % Not all of these are required!
   \email{your_name@email.com}
   \phone{000-00-0000}
-  \mailaddress{Åddrésş, Street, 00000 Cóuntry}
+  \mailaddress{Address, Street, 00000 Country}
   \location{Location, COUNTRY}
   \homepage{www.homepage.com}
   \twitter{@twitterhandle}
@@ -178,7 +181,7 @@ A short abstract would also work.
 % \wheelchart{outer radius}{inner radius}{
 % comma-separated list of value/text width/color/detail}
 \wheelchart{1.5cm}{0.5cm}{%
-  6/8em/accent!30/{Sleep,\\beautiful sleep},
+  6/8em/accent!30/{Sleep, beautiful sleep},
   3/8em/accent!40/Hopeful novelist by night,
   8/8em/accent!60/Daytime job,
   2/10em/accent/Sports and relaxation,
@@ -188,29 +191,6 @@ A short abstract would also work.
 % use ONLY \newpage if you want to force a page break for
 % ONLY the current column
 \newpage
-
-\cvsection{Publications}
-
-%% Specify your last name(s) and first name(s) as given in the .bib to automatically bold your own name in the publications list.
-%% One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly; or write \bibnamedelimi if you use initials in the .bib
-%% You can specify multiple names, especially if you have changed your name or if you need to highlight multiple authors.
-\mynames{Lim/Lian\bibnamedelima Tze,
-  Wong/Lian\bibnamedelima Tze,
-  Lim/Tracy,
-  Lim/L.\bibnamedelimi T.}
-%% MAKE SURE THERE IS NO SPACE AFTER THE FINAL NAME IN YOUR \mynames LIST
-
-\nocite{*}
-
-\printbibliography[heading=pubtype,title={\printinfo{\faBook}{Books}},type=book]
-
-\divider
-
-\printbibliography[heading=pubtype,title={\printinfo{\faFile*[regular]}{Journal Articles}},type=article]
-
-\divider
-
-\printbibliography[heading=pubtype,title={\printinfo{\faUsers}{Conference Proceedings}},type=inproceedings]
 
 %% Switch to the right column. This will now automatically move to the second
 %% page if the content is too long.
