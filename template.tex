@@ -30,7 +30,7 @@
 % you're using pdflatex or xelatex/lualatex
 % WHEN COMPILING WITH XELATEX PLEASE USE
 % xelatex -shell-escape -output-driver="xdvipdfmx -z 0" sample.tex
-\ifxetexorluatex
+\ifxetexorluatex%
   % If using xelatex or lualatex:
   \setmainfont{Roboto Slab}
   \setsansfont{Lato}
@@ -133,7 +133,7 @@
   % \mastodon{@username@instance}{https://instance.url/@username}
 }
 
-\makecvheader
+\makecvheader%
 %% Depending on your tastes, you may want to make fonts of itemize environments slightly smaller
 % \AtBeginEnvironment{itemize}{\small}
 
@@ -145,15 +145,15 @@
 \begin{paracol}{2}
 \cvsection{Experience}
 
-\cvevent{Job Title 1}{Company 1}{Month 20XX -- Ongoing}{Location}
+\cvevent{Job Title 1}{Company 1}{Month 20XX --- Ongoing}{Location}
 \begin{itemize}
 \item Job description 1
 \item Job description 2
 \end{itemize}
 
-\divider
+\divider%
 
-\cvevent{Job Title 2}{Company 2}{Month 20XX -- Ongoing}{Location}
+\cvevent{Job Title 2}{Company 2}{Month 20XX --- Ongoing}{Location}
 \begin{itemize}
 \item Job description 1
 \item Job description 2
@@ -166,25 +166,25 @@
 \item Details
 \end{itemize}
 
-\divider
+\divider%
 
-% \cvevent{Project 2}{Funding agency/institution}{Project duration}{}
+\cvevent{Project 2}{Funding agency/institution}{Project duration}{}
 A short abstract would also work.
 
 \medskip
 
-% \cvsection{A Day of My Life}
+\cvsection{A Day of My Life}
 
-% % Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
-% % \wheelchart{outer radius}{inner radius}{
-% % comma-separated list of value/text width/color/detail}
-% \wheelchart{1.5cm}{0.5cm}{%
-%   6/8em/accent!30/{Sleep, beautiful sleep},
-%   3/8em/accent!40/Hopeful novelist by night,
-%   8/8em/accent!60/Daytime job,
-%   2/10em/accent/Sports and relaxation,
-%   5/6em/accent!20/Spending time with family
-% }
+% Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
+% \wheelchart{outer radius}{inner radius}{
+% comma-separated list of value/text width/color/detail}
+\wheelchart{1.5cm}{0.5cm}{%
+  6/8em/accent!30/{Sleep, beautiful sleep},
+  3/8em/accent!40/Hopeful novelist by night,
+  8/8em/accent!60/Daytime job,
+  2/10em/accent/Sports and relaxation,
+  5/6em/accent!20/Spending time with family
+}
 
 % use ONLY \newpage if you want to force a page break for
 % ONLY the current column
@@ -192,7 +192,7 @@ A short abstract would also work.
 
 %% Switch to the right column. This will now automatically move to the second
 %% page if the content is too long.
-\switchcolumn
+\switchcolumn%
 
 \cvsection{My Life Philosophy}
 
@@ -202,15 +202,15 @@ A short abstract would also work.
 
 \cvsection{Most Proud of}
 
-%% \cvachievement{\faIcon{trophy}}{Fantastic Achievement}{and some details about it}
+% \cvachievement{\faIcon{trophy}}{Fantastic Achievement}{and some details about it}
 
-\divider
+\divider%
 
-%% \cvachievement{\faIcon{heartbeat}}{Another achievement}{more details about it of course}
+% \cvachievement{\faIcon{heartbeat}}{Another achievement}{more details about it of course}
 
-\divider
+\divider%
 
-%% \cvachievement{\faIcon{heartbeat}}{Another achievement}{more details about it of course}
+% \cvachievement{\faIcon{heartbeat}}{Another achievement}{more details about it of course}
 
 \cvsection{Strengths}
 
@@ -227,10 +227,10 @@ A short abstract would also work.
 \cvsection{Languages}
 
 % \cvskill{English}{5}
-\divider
+\divider%
 
 % \cvskill{Spanish}{4}
-\divider
+\divider%
 
 % \cvskill{German}{3.5} %% Supports X.5 values.
 
@@ -244,11 +244,11 @@ A short abstract would also work.
 % \cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 -- June 2006}{}
 Thesis title: Wonderful Research
 
-\divider
+\divider%
 
 % \cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 -- June 2002}{}
 
-\divider
+\divider%
 
 % \cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 -- June 2001}{}
 
@@ -260,7 +260,7 @@ Thesis title: Wonderful Research
 % \cvref{Prof.\ Alpha Beta}{Institute}{a.beta@university.edu}
 {Address Line 1\\Address line 2}
 
-\divider
+\divider%
 
 % \cvref{Prof.\ Gamma Delta}{Institute}{g.delta@university.edu}
 {Address Line 1\\Address line 2}

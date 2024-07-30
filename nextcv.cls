@@ -325,12 +325,12 @@
   \ifstrequal{#3}{}{}{%
     {\small\makebox[0.5\linewidth][l]%
         {\BeginAccSupp{method=pdfstringdef,ActualText={\datename:}}\cvDateMarker\EndAccSupp{}%
-          ~#3}%
+          ~\normalfont#3}%
       }}%
   \ifstrequal{#4}{}{}{%
     {\small\makebox[0.5\linewidth][l]%
         {\BeginAccSupp{method=pdfstringdef,ActualText={\locationname:}}\cvLocationMarker\EndAccSupp{}%
-          ~#4}%
+          ~\normalfont#4}%
       }}\par
   \medskip\normalsize
 }
