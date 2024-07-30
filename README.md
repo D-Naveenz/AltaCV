@@ -21,14 +21,12 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">NextCV Temple</h3>
 
   <p align="center">
     The template class for a next generation resume/curriculum vitae.
     <br />
     <br />
-    <a href="https://github.com/D-Naveenz/NextCV">Docs</a>
-    ·
     <a href="https://github.com/D-Naveenz/NextCV/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
     <a href="https://github.com/D-Naveenz/NextCV/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
@@ -56,7 +54,7 @@
     </li>
     <li><a href="#usage">Usage</a>
       <ul>
-        <li><a href="#prerequisites">Requirements and Compilation</a></li>
+        <li><a href="#requirements-and-compilation">Requirements and Compilation</a></li>
         <li><a href="#template-file">Template file</a></li>
         <li><a href="#clickable-info-fields">Clickable Info fields</a></li>/'
         <li><a href="#new-information-fields">New Information Fields</a></li>
@@ -97,8 +95,6 @@ NextCV is a modern and customizable LaTeX class for creating beautiful and profe
 ### Built With
 
 [![LaTeX][latex-shield]][latex-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -336,7 +332,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Naveen Dharmathunga - [@XerDuke](https://x.com/dharmathunga) - dasheenaveen@outlook.com
 
-Project Link: [https://github.com/D-Naveenz/NextCV](https://github.com/D-Naveenz/NextCV)
+Project Link: <https://github.com/D-Naveenz/NextCV>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

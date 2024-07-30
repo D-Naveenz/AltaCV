@@ -32,7 +32,9 @@
 \RequirePackage{etoolbox}
 \RequirePackage{accsupp}
 \RequirePackage[margin=2cm]{geometry}
-\RequirePackage[fixed]{fontawesome5}
+%% \RequirePackage[fixed]{fontawesome5}
+%% added fontawesome6 for more icons
+\RequirePackage{fontawesome/6}
 \RequirePackage{ifxetex,ifluatex}
 \RequirePackage{scrlfile}
 \RequirePackage{xparse}
@@ -52,6 +54,7 @@
 
 \ifxetexorluatex
   \RequirePackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
 \else
   %% attempts to make ligatures
   %% copy-paste as normal characters
@@ -89,11 +92,11 @@
 \colorlet{tagline}{accent}
 % Renamed or added v1.7
 \newcommand{\cvItemMarker}{{\small\textbullet}}
-\newcommand{\cvRatingMarker}{\faCircle}
+\newcommand{\cvRatingMarker}{\faIcon{circle}}
 \let\itemmarker\cvItemMarker      % for backward compatibility
 \let\ratingmarker\cvRatingMarker  % for backward compatibility
-\newcommand{\cvDateMarker}{\faCalendar[regular]}
-\newcommand{\cvLocationMarker}{\faMapMarker}
+\newcommand{\cvDateMarker}{\faIcon{calendar}}
+\newcommand{\cvLocationMarker}{\textbf{\faIcon{location-dot}}}
 \newcommand{\locationname}{Location}
 \newcommand{\datename}{Date}
 
@@ -119,18 +122,18 @@
 %% \detokenize will break UTF-8 in pdflatex
 %% Using alternative from https://tex.stackexchange.com/a/530911/226
 \newcommand{\utffriendlydetokenize}[1]{%
-\scantokens{%
-\catcode`\_=12%
-%   \catcode`\^=12%
-%   \catcode`\{=12%
-%   \catcode`\}=12%
-\catcode`\&=12%
-\catcode`\$=12%
-\catcode`\#=12%
-\catcode`\~=12%
-%   \catcode`\\=12%
-{#1}%
-}%
+  \scantokens{%
+    \catcode`\_=12%
+    %   \catcode`\^=12%
+    %   \catcode`\{=12%
+    %   \catcode`\}=12%
+    \catcode`\&=12%
+    \catcode`\$=12%
+    \catcode`\#=12%
+    \catcode`\~=12%
+    %   \catcode`\\=12%
+    {#1}%
+  }%
 }
 
 \ExplSyntaxOn
@@ -163,46 +166,59 @@
   \IfNoValueTF{#3}{%
     \mbox{\textcolor{accent}%
       {\BeginAccSupp{method=escape,ActualText={\detokenize{#1}:}}\normalfont #1\EndAccSupp{}}%
-      ~\utffriendlydetokenize{#2}\hspace{2em}}%
+      ~\hspace{0.3em}\utffriendlydetokenize{#2}\hspace{2em}}%
   }{%
     \if@withhyper%
       \mbox{\textcolor{accent}%
         {\BeginAccSupp{method=escape,ActualText={\detokenize{#1}:}}\normalfont #1\EndAccSupp{}}%
-        ~\href{#3}{\utffriendlydetokenize{#2}}\hspace{2em}}
+        ~\hspace{0.3em}\href{#3}{\utffriendlydetokenize{#2}}\hspace{2em}}
     \else%
       \ClassWarning{Please specify [withhyper] option to enable hyperlinks. Printing out full hyperlink prefix #1 for now.}%
       \mbox{\textcolor{accent}
       {\BeginAccSupp{method=escape,ActualText={\detokenize{#1}:}}\normalfont #1\EndAccSupp{}}%
-      ~{\utffriendlydetokenize{#3#2}}\hspace{2em}}%
+      ~\hspace{0.3em}{\utffriendlydetokenize{#3#2}}\hspace{2em}}%
     \fi%
   }%
 }%
 
-
 %% Exploring convenient creation of fields
 %% Added starred mode to create \printinfo with full URL
+%% You can debug by uncommenting the \typeout
 \NewDocumentCommand{\NewInfoField}{s m m o}{%
+  % \typeout{#1,#2,#3,#4}
+  % If the star argument is not present
   \IfBooleanF{#1}{
     \IfNoValueF{#4}{\csdef{#2 hyperprefix}{#4}}%
   }
   \csdef{#2 symbol}{#3}%
+  % If the star argument is present
   \IfBooleanTF{#1}
-  { \csdef{#2}##1##2{%
+  {
+    \csdef{#2}##1##2{%
       \if@withhyper
         \IfNoValueTF {##2}
-        {\printinfo{\csuse{#2 symbol}}{##1}}%
-        {\printinfo{\csuse{#2 symbol}}{##1}[##2]}%
+        { % If the second argument is not provided, print the info with the symbol
+          \printinfo{\csuse{#2 symbol}}{##1}%
+        }%
+        { % Otherwise, print the info with the symbol and the second argument
+          \printinfo{\csuse{#2 symbol}}{##1}[##2]%
+        }%
       \else
+        % If @withhyper is not set, print the info with the symbol
         \printinfo{\csuse{#2 symbol}}{##1}%
       \fi%
     }%
   }
-  { \csdef{#2}##1{%
+  { % If the star argument is not present, define a command that takes one argument
+    \csdef{#2}##1{%
       \if@withhyper
         \IfNoValueTF {#4}
-        {\printinfo{\csuse{#2 symbol}}{##1}}%
-        {\printinfo{\csuse{#2 symbol}}{##1}[\csuse{#2 hyperprefix}##1]}%
+        { % If the fourth argument is not provided, print the info with the symbol
+          \printinfo{\csuse{#2 symbol}}{##1}}%
+        { % Otherwise, print the info with the symbol and hyperprefix
+          \printinfo{\csuse{#2 symbol}}{##1}[\csuse{#2 hyperprefix}##1]}%
       \else
+        % If @withhyper is not set, print the info with the symbol
         \printinfo{\csuse{#2 symbol}}{##1}%
       \fi%
     }%
@@ -213,15 +229,15 @@
 \newcommand{\name}[1]{\def\@name{#1}}
 \newcommand{\tagline}[1]{\def\@tagline{#1}}
 \newcommand{\personalinfo}[1]{\def\@personalinfo{#1}}
-\NewInfoField{email}{\faAt}[mailto:]
-\NewInfoField{mailaddress}{\faEnvelope}
-\NewInfoField{phone}{\faPhone}[tel:]
-\NewInfoField{homepage}{\faGlobe}[https://]
-\NewInfoField{twitter}{\faTwitter}[https://twitter.com/]
-\NewInfoField{linkedin}{\faLinkedin}[https://linkedin.com/in/]
-\NewInfoField{github}{\faGithub}[https://github.com/]
+\NewInfoField{email}{\faIcon{at}}[mailto:]
+\NewInfoField{mailaddress}{\faIcon{envelope}}
+\NewInfoField{phone}{\textbf{\faIcon{phone}}}[tel:]
+\NewInfoField{homepage}{\textbf{\faIcon{globe}}}[https://]
+\NewInfoField{twitter}{\faIcon{twitter}}[https://twitter.com/]
+\NewInfoField{linkedin}{\faIcon{linkedin}}[https://linkedin.com/in/]
+\NewInfoField{github}{\faIcon{github}}[https://github.com/]
 % Use fontawesome5 for Orcid symbol
-\NewInfoField{orcid}{\faOrcid}[https://orcid.org/]
+\NewInfoField{orcid}{\faIcon{orcid}}[https://orcid.org/]
 \NewInfoField{location}{\cvLocationMarker}
 
 % Support for multiple photos
