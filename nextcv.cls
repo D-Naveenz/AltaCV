@@ -65,7 +65,7 @@
 \colorlet{name}{heading}
 \colorlet{tagline}{accent}
 \newcommand{\cvItemMarker}{{\small\textbullet}}
-\newcommand{\cvRatingMarker}{\faIcon{circle}}
+\newcommand{\cvRatingMarker}{\large\textbf{\faIcon{circle}}}
 \let\itemmarker\cvItemMarker      % for backward compatibility
 \let\ratingmarker\cvRatingMarker  % for backward compatibility
 \newcommand{\cvDateMarker}{\faIcon{calendar}}
@@ -80,7 +80,7 @@
 \setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0.25\baselineskip,after=\vspace{0.25\baselineskip}}
 \setlist[itemize]{label=\cvItemMarker}
 % \RequirePackage{graphicx}
-% \RequirePackage{trimclip}
+\RequirePackage{trimclip}
 \RequirePackage{dashrule}
 \RequirePackage{multirow,tabularx}
 \RequirePackage{changepage}
@@ -308,9 +308,9 @@
 }
 
 \newcommand{\cvachievement}[3]{%
-  \begin{tabularx}{\linewidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
-    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={#1: }}#1\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#2} \\
-                                                                                                       & #3
+  \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
+    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{#1}: }}#1\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#2} \\
+    & #3
   \end{tabularx}%
   \smallskip
 }
@@ -325,11 +325,16 @@
 \textcolor{emphasis}{\textbf{#1}}\hfill
 \BeginAccSupp{method=plain,ActualText={#2}}
 \foreach \x in {1,...,5}{%
-\ifdimequal{\x pt - #2 pt}{0.5pt}%
-{\clipbox*{0pt -0.25ex {.5\width} {\totalheight}}{\color{accent}\cvRatingMarker}%
-\clipbox*{{.5\width} -0.25ex {\width} {\totalheight}}{\color{body!30}\cvRatingMarker}}
-{\ifdimgreater{\x bp}{#2 bp}{\color{body!30}}{\color{accent}}\cvRatingMarker}%
-}\EndAccSupp{}\par%
+  \ifdimequal{\x pt - #2 pt}{0.5pt}%
+  %% if true, then print half-filled marker
+  {\clipbox*{0pt -0.25ex {.5\width} {\totalheight}}{\color{accent}{\cvRatingMarker}}%
+   \clipbox*{{.5\width} -0.25ex {\width} {\totalheight}}{\color{body!30}{\cvRatingMarker}}%
+  }%
+  %% if false, then print marker filled according to rating
+  {\ifdimgreater{\x bp}{#2 bp}{\color{body!30}}{\color{accent}}{\cvRatingMarker}}%
+  \hspace{1em}% Add space between markers (adjust the value as needed)
+}%
+\EndAccSupp{}\par%
 }
 
 \newcommand{\cvref}[3]{%
