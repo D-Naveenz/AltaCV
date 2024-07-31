@@ -35,7 +35,7 @@
 %% added fontawesome6 for more icons
 \RequirePackage{fontawesome/6}
 \RequirePackage{ifxetex,ifluatex}
-% \RequirePackage{scrlfile}
+\RequirePackage{scrlfile}
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
 \RequirePackage{setspace}
@@ -90,7 +90,6 @@
 \RequirePackage[inline]{enumitem}
 \setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0.25\baselineskip,after=\vspace{0.25\baselineskip}}
 \setlist[itemize]{label=\cvItemMarker}
-% \RequirePackage{graphicx}
 \RequirePackage{trimclip}
 \RequirePackage{dashrule}
 \RequirePackage{multirow,tabularx}
@@ -276,7 +275,7 @@
     {\setstretch{1.5}\personalinfofont\@personalinfo\par}
   \end{minipage}\hfill%
   \nextcv@right@photos\par%
-  \endgroup\medskip
+  \endgroup\bigskip
 }
 
 \renewenvironment{quote}{\color{accent}\itshape\large}{\par}

@@ -18,6 +18,9 @@
 %% NextCV uses the fontawesome5 and packages.
 %% See http://texdoc.net/pkg/fontawesome5 for full list of symbols.
 
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+
 \setpdfmetadata{me}{mytitle}{subject}{Green Networking, Mobile Cloud, Network Coding, Energy}
 
 % Change the page layout if you need to
@@ -46,6 +49,7 @@
 \definecolor{LacosteGreen}{HTML}{004526}
 \definecolor{HunterGreen}{HTML}{355E3B}
 \definecolor{HeinekenGreen}{HTML}{008200}
+\definecolor{TeaGreen}{HTML}{F2FFE6}
 \definecolor{GoldenEarth}{HTML}{E7D192}
 \colorlet{name}{black}
 \colorlet{tagline}{HunterGreen}
@@ -96,6 +100,12 @@
 %% \addbibresource{sample.bib}
 
 \begin{document}
+%% Green background
+\begin{tikzpicture}[remember picture, overlay]
+  % Define the colored box
+  \fill[TeaGreen] (current page.north west) rectangle ([yshift=-5.1cm]current page.north east); %  Adjust yshift=-5.1cm to control the height of the green background.
+\end{tikzpicture}
+
 \name{Your Name Here}
 \tagline{Your Position or Tagline Here}
 %% You can add multiple photos on the left or right
