@@ -26,22 +26,12 @@
 % The paracol package lets you typeset columns of text in parallel
 \usepackage{paracol}
 
-% Change the font if you want to, depending on whether
-% you're using pdflatex or xelatex/lualatex
+% Change the font if you want to, depending on whether you're using xelatex/lualatex
 % WHEN COMPILING WITH XELATEX PLEASE USE
 % xelatex -shell-escape -output-driver="xdvipdfmx -z 0" sample.tex
-\ifxetexorluatex
-  % If using xelatex or lualatex:
-  \setmainfont{Roboto Slab}
-  \setsansfont{Lato}
-  \renewcommand{\familydefault}{\sfdefault}
-\else
-  % If using pdflatex:
-  \usepackage[rm]{roboto}
-  \usepackage[defaultsans]{lato}
-  % \usepackage{sourcesanspro}
-  \renewcommand{\familydefault}{\sfdefault}
-\fi
+\setmainfont{Roboto Slab}
+\setsansfont{Lato}
+\renewcommand{\familydefault}{\sfdefault}
 
 % Change the colours if you want to
 \definecolor{SlateGrey}{HTML}{2E2E2E}
@@ -68,7 +58,7 @@
 % Change the bullets for itemize and rating marker
 % for \cvskill if you want to
 \renewcommand{\cvItemMarker}{{\small\textbullet}}
-\renewcommand{\cvRatingMarker}{\faCircle}
+% \renewcommand{\cvRatingMarker}{\faIcon{circle}}
 % ...and the markers for the date/location for \cvevent
 % \renewcommand{\cvDateMarker}{\faCalendar*[regular]}
 % \renewcommand{\cvLocationMarker}{\faMapMarker*}
@@ -101,19 +91,18 @@
 \tagline{Your Position or Tagline Here}
 %% You can add multiple photos on the left or right
 \photoR{2.8cm}{Globe_High}
-% \photoL{2.5cm}{Yacht_High,Suitcase_High}
 
 \personalinfo{%
   % Not all of these are required!
   \email{your_name@email.com}
-  \phone{000-00-0000}
+  \phone{000--00--0000}
   \mailaddress{Address, Street, 00000 Country}
   \location{Location, COUNTRY}
   \homepage{www.homepage.com}
   \twitter{@twitterhandle}
   \linkedin{your_id}
   \github{your_id}
-  \orcid{0000-0000-0000-0000}
+  \orcid{0000--0000--0000--0000}
   %% You can add your own arbitrary detail with
   %% \printinfo{symbol}{detail}[optional hyperlink prefix]
   % \printinfo{\faPaw}{Hey ho!}[https://example.com/]
@@ -134,7 +123,7 @@
   % \mastodon{@username@instance}{https://instance.url/@username}
 }
 
-\makecvheader
+\makecvheader%
 %% Depending on your tastes, you may want to make fonts of itemize environments slightly smaller
 % \AtBeginEnvironment{itemize}{\small}
 
@@ -146,15 +135,15 @@
 \begin{paracol}{2}
 \cvsection{Experience}
 
-\cvevent{Job Title 1}{Company 1}{Month 20XX -- Ongoing}{Location}
+\cvevent{Job Title 1}{Company 1}{Month 20XX --- Ongoing}{Location}
 \begin{itemize}
 \item Job description 1
 \item Job description 2
 \end{itemize}
 
-\divider
+\divider%
 
-\cvevent{Job Title 2}{Company 2}{Month 20XX -- Ongoing}{Location}
+\cvevent{Job Title 2}{Company 2}{Month 20XX --- Ongoing}{Location}
 \begin{itemize}
 \item Job description 1
 \item Job description 2
@@ -167,25 +156,12 @@
 \item Details
 \end{itemize}
 
-\divider
+\divider%
 
 \cvevent{Project 2}{Funding agency/institution}{Project duration}{}
 A short abstract would also work.
 
 \medskip
-
-\cvsection{A Day of My Life}
-
-% Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
-% \wheelchart{outer radius}{inner radius}{
-% comma-separated list of value/text width/color/detail}
-\wheelchart{1.5cm}{0.5cm}{%
-  6/8em/accent!30/{Sleep, beautiful sleep},
-  3/8em/accent!40/Hopeful novelist by night,
-  8/8em/accent!60/Daytime job,
-  2/10em/accent/Sports and relaxation,
-  5/6em/accent!20/Spending time with family
-}
 
 % use ONLY \newpage if you want to force a page break for
 % ONLY the current column
@@ -193,25 +169,25 @@ A short abstract would also work.
 
 %% Switch to the right column. This will now automatically move to the second
 %% page if the content is too long.
-\switchcolumn
+\switchcolumn%
 
 \cvsection{My Life Philosophy}
 
 \begin{quote}
-``Something smart or heartfelt, preferably in one sentence.''
+``Something smart or heartfelt, preferably in one sentence''
 \end{quote}
 
 \cvsection{Most Proud of}
 
-\cvachievement{\faTrophy}{Fantastic Achievement}{and some details about it}
+\cvachievement{\textbf{\faIcon{trophy}}}{Fantastic Achievement}{and some details about it}
 
-\divider
+\divider%
 
-\cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
+\cvachievement{\textbf{\faIcon{heart-pulse}}}{Another achievement}{more details about it of course}
 
-\divider
+\divider%
 
-\cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
+\cvachievement{\textbf{\faIcon{heart-pulse}}}{Another achievement}{more details about it of course}
 
 \cvsection{Strengths}
 
@@ -228,10 +204,10 @@ A short abstract would also work.
 \cvsection{Languages}
 
 \cvskill{English}{5}
-\divider
+\divider%
 
 \cvskill{Spanish}{4}
-\divider
+\divider%
 
 \cvskill{German}{3.5} %% Supports X.5 values.
 
@@ -242,26 +218,26 @@ A short abstract would also work.
 
 \cvsection{Education}
 
-\cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 -- June 2006}{}
+\cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 --- June 2006}{}
 Thesis title: Wonderful Research
 
-\divider
+\divider%
 
-\cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 -- June 2002}{}
+\cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 --- June 2002}{}
 
-\divider
+\divider%
 
-\cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 -- June 2001}{}
+\cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 --- June 2001}{}
 
 % \divider
 
 \cvsection{Referees}
 
-% \cvref{name}{email}{mailing address}
+\cvref{name}{email}{mailing address}
 \cvref{Prof.\ Alpha Beta}{Institute}{a.beta@university.edu}
 {Address Line 1\\Address line 2}
 
-\divider
+\divider%
 
 \cvref{Prof.\ Gamma Delta}{Institute}{g.delta@university.edu}
 {Address Line 1\\Address line 2}
