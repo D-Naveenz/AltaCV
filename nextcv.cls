@@ -70,8 +70,11 @@
 \let\ratingmarker\cvRatingMarker  % for backward compatibility
 \newcommand{\cvDateMarker}{\faIcon{calendar}}
 \newcommand{\cvLocationMarker}{\textbf{\faIcon{location-dot}}}
+\newcommand{\cvCertificateMarker}{\textbf{\faIcon{certificate}}}
+\newcommand{\cvProjectLinkMarker}{\faIcon{github}}
 \newcommand{\locationname}{Location}
 \newcommand{\datename}{Date}
+\newcommand{\projectlink}{Project Link}
 
 \RequirePackage{tikz}
 \usetikzlibrary{arrows}
@@ -307,12 +310,61 @@
   \medskip\normalsize
 }
 
+\RequirePackage{listofitems} % String splitter
+\newcommand{\cvproject}[4]{%
+  {
+    \setsepchar{,}%  
+    \readlist*\titlelist{#1}%
+    \begin{tabularx}{\columnwidth}{@{}l | >{\raggedright\arraybackslash}X@{}}
+      \large\textcolor{emphasis}{\textbf{\titlelist[1]}} & \textcolor{emphasis}{\titlelist[2]} \\
+    \end{tabularx}\par
+    \smallskip\normalsize
+    \let\titlelist\relax
+  }
+  \ifstrequal{#2}{}{}{
+    \textbf{\color{accent}#2}\par
+    \smallskip
+  }
+  \ifstrequal{#3}{}{}{%
+    {\small\makebox[0.5\linewidth][l]%
+      {\BeginAccSupp{method=pdfstringdef,ActualText={\datename:}}\cvDateMarker\EndAccSupp{}%
+      ~\normalfont#3}%
+    }%
+  }%
+  \ifstrequal{#4}{}{}{%
+    % The parsing-separator⟨delimiter⟩“/” is reserved by default for nested lists
+    %  To set “/” as the ⟨parsing-separator⟩ for a simple list, it is necessary, using the optional argument
+    \setsepchar[,]{/}%
+    \readlist*\urllist{#4}%
+    {\small\makebox[0.5\linewidth][l]%
+        {\BeginAccSupp{method=pdfstringdef,ActualText={\projectlink:}}\cvProjectLinkMarker\EndAccSupp{}%
+          ~\normalfont\href{#4}{GitHub: \urllist[-1]}}%
+    }%
+    \let\urllist\relax
+  }\par
+  \medskip\normalsize
+}
+
+% adds accsupp for the icon as well
+\newcommand{\cvcert}[3]{%
+  \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
+    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{\cvCertificateMarker}: }}\cvCertificateMarker\EndAccSupp{}} & \bfseries\href{#2}{\textcolor{emphasis}{#1}} \\
+    & \small{#3}
+  \end{tabularx}%
+  \smallskip
+}
+
 \newcommand{\cvachievement}[3]{%
   \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
     \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{#1}: }}#1\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#2} \\
     & #3
   \end{tabularx}%
   \smallskip
+}
+
+\newcommand{\cvtagheader}[1]{
+  \textcolor{emphasis}{\bfseries#1}\\
+  \medskip%
 }
 
 \newcommand{\cvtag}[1]{%
