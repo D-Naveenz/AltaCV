@@ -38,23 +38,31 @@
 % \RequirePackage{scrlfile}
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
+\RequirePackage{setspace}
 %% Load fontspec (only works with xelatex or lualatex)
 \RequirePackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
-
 
 \if@raggedtwoe
   \RequirePackage[newcommands]{ragged2e}
 \fi
 
+\RequirePackage{xcolor}
+
 \if@withhyper
   \AtBeginDocument{%
-    \hypersetup{hidelinks}
-    \urlstyle{same}
+    % Custom colors
+    \definecolor{linkcolor}{HTML}{4586FF} % Link color
+
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=linkcolor,
+        filecolor=linkcolor,
+        urlcolor=linkcolor,
+        citecolor=linkcolor
+    }
   }
 \fi
-
-\RequirePackage{xcolor}
 
 \colorlet{accent}{blue!70!black}
 \colorlet{emphasis}{black}
@@ -124,12 +132,6 @@
       pdfkeywords={#4}%
     }%
   }%
-}
-
-%% Helper function to format each keyword (removes leading/trailing spaces)
-\newcommand{\FormatKeyword}[1]{%
-  \pdfstringdefDisableCommands{\def\Temp{#1}}%
-  \Temp%
 }
 
 %% Usage example:
@@ -209,7 +211,7 @@
 \NewInfoField{mailaddress}{\faIcon{envelope}}
 \NewInfoField{phone}{\textbf{\faIcon{phone}}}[tel:]
 \NewInfoField{homepage}{\textbf{\faIcon{globe}}}[https://]
-\NewInfoField{twitter}{\faIcon{twitter}}[https://twitter.com/]
+\NewInfoField{twitter}{\faIcon{x-twitter}}[https://x.com/]
 \NewInfoField{linkedin}{\faIcon{linkedin}}[https://linkedin.com/in/]
 \NewInfoField{github}{\faIcon{github}}[https://github.com/]
 \NewInfoField{orcid}{\faIcon{orcid}}[https://orcid.org/]
@@ -271,7 +273,7 @@
     \medskip
     {\taglinefont\color{tagline}\@tagline\par}
     \medskip
-    {\personalinfofont\@personalinfo\par}
+    {\setstretch{1.5}\personalinfofont\@personalinfo\par}
   \end{minipage}\hfill%
   \nextcv@right@photos\par%
   \endgroup\medskip

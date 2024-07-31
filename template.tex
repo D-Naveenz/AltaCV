@@ -29,7 +29,13 @@
 % Change the font if you want to, depending on whether you're using xelatex/lualatex
 % WHEN COMPILING WITH XELATEX PLEASE USE
 % xelatex -shell-escape -output-driver="xdvipdfmx -z 0" sample.tex
-\setmainfont{Roboto Slab}
+\setmainfont{Exo2}[
+  Path           =./fonts/Exo_2/static/,
+  Extension      =.ttf,
+  UprightFont    =*-Regular,
+  ItalicFont     =*-Italic,
+  BoldFont       =*-Bold,
+]
 \setsansfont{Lato}
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -99,7 +105,7 @@
   \mailaddress{Address, Street, 00000 Country}
   \location{Location, COUNTRY}
   \homepage{www.homepage.com}
-  \twitter{@twitterhandle}
+  \twitter{@xhandle}
   \linkedin{your_id}
   \github{your_id}
   \orcid{0000--0000--0000--0000}
@@ -148,6 +154,8 @@
 \item Job description 1
 \item Job description 2
 \end{itemize}
+
+\medskip
 
 
 \cvsection{Projects}
@@ -208,9 +216,27 @@
 %% page if the content is too long.
 \switchcolumn%
 
-\cvsection{Summary}
+\cvsection{Career Objective}
 
 A brief statement (2--3 sentences) highlighting your key qualifications, experience, and career goals.
+
+\medskip
+
+
+\cvsection{Education}
+
+\cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 --- June 2006}{}
+Thesis title: Wonderful Research
+
+\divider%
+
+\cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 --- June 2002}{}
+
+\divider%
+
+\cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 --- June 2001}{}
+
+\medskip
 
 
 \cvsection{Skills}
@@ -236,6 +262,15 @@ A brief statement (2--3 sentences) highlighting your key qualifications, experie
 \cvtag{Embedded Systems}\\
 \cvtag{Statistical Analysis}
 
+\divider\smallskip
+
+\cvtagheader{Tools}
+\cvtag{C++}
+\cvtag{Embedded Systems}\\
+\cvtag{Statistical Analysis}
+
+\medskip
+
 
 \cvsection{Archivements}
 
@@ -254,20 +289,6 @@ A brief statement (2--3 sentences) highlighting your key qualifications, experie
 %% spacing consistent... sorry. Use \smallskip, \medskip,
 %% \bigskip, \vspace etc to make adjustments.
 \medskip
-
-
-\cvsection{Education}
-
-\cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 --- June 2006}{}
-Thesis title: Wonderful Research
-
-\divider%
-
-\cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 --- June 2002}{}
-
-\divider%
-
-\cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 --- June 2001}{}
 
 
 \cvsection{Referees}
