@@ -38,23 +38,31 @@
 % \RequirePackage{scrlfile}
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
+\RequirePackage{setspace}
 %% Load fontspec (only works with xelatex or lualatex)
 \RequirePackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
-
 
 \if@raggedtwoe
   \RequirePackage[newcommands]{ragged2e}
 \fi
 
+\RequirePackage{xcolor}
+
 \if@withhyper
   \AtBeginDocument{%
-    \hypersetup{hidelinks}
-    \urlstyle{same}
+    % Custom colors
+    \definecolor{linkcolor}{HTML}{4586FF} % Link color
+
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=linkcolor,
+        filecolor=linkcolor,
+        urlcolor=linkcolor,
+        citecolor=linkcolor
+    }
   }
 \fi
-
-\RequirePackage{xcolor}
 
 \colorlet{accent}{blue!70!black}
 \colorlet{emphasis}{black}
@@ -70,8 +78,11 @@
 \let\ratingmarker\cvRatingMarker  % for backward compatibility
 \newcommand{\cvDateMarker}{\faIcon{calendar}}
 \newcommand{\cvLocationMarker}{\textbf{\faIcon{location-dot}}}
+\newcommand{\cvCertificateMarker}{\textbf{\faIcon{certificate}}}
+\newcommand{\cvProjectLinkMarker}{\faIcon{github}}
 \newcommand{\locationname}{Location}
 \newcommand{\datename}{Date}
+\newcommand{\projectlink}{Project Link}
 
 \RequirePackage{tikz}
 \usetikzlibrary{arrows}
@@ -121,12 +132,6 @@
       pdfkeywords={#4}%
     }%
   }%
-}
-
-%% Helper function to format each keyword (removes leading/trailing spaces)
-\newcommand{\FormatKeyword}[1]{%
-  \pdfstringdefDisableCommands{\def\Temp{#1}}%
-  \Temp%
 }
 
 %% Usage example:
@@ -206,7 +211,7 @@
 \NewInfoField{mailaddress}{\faIcon{envelope}}
 \NewInfoField{phone}{\textbf{\faIcon{phone}}}[tel:]
 \NewInfoField{homepage}{\textbf{\faIcon{globe}}}[https://]
-\NewInfoField{twitter}{\faIcon{twitter}}[https://twitter.com/]
+\NewInfoField{twitter}{\faIcon{x-twitter}}[https://x.com/]
 \NewInfoField{linkedin}{\faIcon{linkedin}}[https://linkedin.com/in/]
 \NewInfoField{github}{\faIcon{github}}[https://github.com/]
 \NewInfoField{orcid}{\faIcon{orcid}}[https://orcid.org/]
@@ -268,7 +273,7 @@
     \medskip
     {\taglinefont\color{tagline}\@tagline\par}
     \medskip
-    {\personalinfofont\@personalinfo\par}
+    {\setstretch{1.5}\personalinfofont\@personalinfo\par}
   \end{minipage}\hfill%
   \nextcv@right@photos\par%
   \endgroup\medskip
@@ -307,12 +312,61 @@
   \medskip\normalsize
 }
 
+\RequirePackage{listofitems} % String splitter
+\newcommand{\cvproject}[4]{%
+  {
+    \setsepchar{,}%  
+    \readlist*\titlelist{#1}%
+    \begin{tabularx}{\columnwidth}{@{}l | >{\raggedright\arraybackslash}X@{}}
+      \large\textcolor{emphasis}{\textbf{\titlelist[1]}} & \textcolor{emphasis}{\titlelist[2]} \\
+    \end{tabularx}\par
+    \smallskip\normalsize
+    \let\titlelist\relax
+  }
+  \ifstrequal{#2}{}{}{
+    \textbf{\color{accent}\detokenize{[ #2 ]}}\par
+    \smallskip
+  }
+  \ifstrequal{#3}{}{}{%
+    {\small\makebox[0.5\linewidth][l]%
+      {\BeginAccSupp{method=pdfstringdef,ActualText={\datename:}}\cvDateMarker\EndAccSupp{}%
+      ~\normalfont#3}%
+    }%
+  }%
+  \ifstrequal{#4}{}{}{%
+    % The parsing-separator⟨delimiter⟩“/” is reserved by default for nested lists
+    %  To set “/” as the ⟨parsing-separator⟩ for a simple list, it is necessary, using the optional argument
+    \setsepchar[,]{/}%
+    \readlist*\urllist{#4}%
+    {\small\makebox[0.5\linewidth][l]%
+        {\BeginAccSupp{method=pdfstringdef,ActualText={\projectlink:}}\cvProjectLinkMarker\EndAccSupp{}%
+          ~\normalfont\href{#4}{GitHub: \urllist[-1]}}%
+    }%
+    \let\urllist\relax
+  }\par
+  \medskip\normalsize
+}
+
+% adds accsupp for the icon as well
+\newcommand{\cvcert}[3]{%
+  \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
+    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{\cvCertificateMarker}: }}\cvCertificateMarker\EndAccSupp{}} & \bfseries\href{#2}{\textcolor{emphasis}{#1}} \\
+    & \small{#3}
+  \end{tabularx}%
+  \smallskip
+}
+
 \newcommand{\cvachievement}[3]{%
   \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
     \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{#1}: }}#1\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#2} \\
     & #3
   \end{tabularx}%
   \smallskip
+}
+
+\newcommand{\cvtagheader}[1]{
+  \large\textcolor{emphasis}{\bfseries#1}\par
+  \medskip%
 }
 
 \newcommand{\cvtag}[1]{%
@@ -322,7 +376,7 @@
 % Use accsupp so that the actual numeric value is copied/pasted
 %       and also support 0.5, 1.5, 2.5, 3.5, 4.5
 \newcommand{\cvskill}[2]{%
-\textcolor{emphasis}{\textbf{#1}}\hfill
+{#1}\hfill
 \BeginAccSupp{method=plain,ActualText={#2}}
 \foreach \x in {1,...,5}{%
   \ifdimequal{\x pt - #2 pt}{0.5pt}%
