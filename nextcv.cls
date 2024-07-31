@@ -32,42 +32,16 @@
 \RequirePackage{etoolbox}
 \RequirePackage{accsupp}
 \RequirePackage[margin=2cm]{geometry}
-%% \RequirePackage[fixed]{fontawesome5}
 %% added fontawesome6 for more icons
 \RequirePackage{fontawesome/6}
 \RequirePackage{ifxetex,ifluatex}
-\RequirePackage{scrlfile}
+% \RequirePackage{scrlfile}
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
+%% Load fontspec (only works with xelatex or lualatex)
+\RequirePackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
 
-%% added for convenience
-\newif\ifxetexorluatex
-\ifxetex
-  \xetexorluatextrue
-\else
-  \ifluatex
-    \xetexorluatextrue
-  \else
-    \xetexorluatexfalse
-  \fi
-\fi
-
-\ifxetexorluatex
-  \RequirePackage{fontspec}
-  \defaultfontfeatures{Ligatures=TeX}
-\else
-  %% attempts to make ligatures
-  %% copy-paste as normal characters
-  \RequirePackage{cmap}
-  \RequirePackage[utf8]{inputenc}
-  \RequirePackage[T1]{fontenc}
-  \input{glyphtounicode}
-  \pdfglyphtounicode{f_f}{FB00}
-  \pdfglyphtounicode{f_f_i}{FB03}
-  \pdfglyphtounicode{f_f_l}{FB04}
-  \pdfglyphtounicode{f_i}{FB01}
-  \pdfgentounicode=1
-\fi
 
 \if@raggedtwoe
   \RequirePackage[newcommands]{ragged2e}
@@ -90,7 +64,6 @@
 \colorlet{body}{black!80!white}
 \colorlet{name}{heading}
 \colorlet{tagline}{accent}
-% Renamed or added v1.7
 \newcommand{\cvItemMarker}{{\small\textbullet}}
 \newcommand{\cvRatingMarker}{\faIcon{circle}}
 \let\itemmarker\cvItemMarker      % for backward compatibility
@@ -106,8 +79,8 @@
 \RequirePackage[inline]{enumitem}
 \setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0.25\baselineskip,after=\vspace{0.25\baselineskip}}
 \setlist[itemize]{label=\cvItemMarker}
-\RequirePackage{graphicx}
-\RequirePackage{trimclip}
+% \RequirePackage{graphicx}
+% \RequirePackage{trimclip}
 \RequirePackage{dashrule}
 \RequirePackage{multirow,tabularx}
 \RequirePackage{changepage}
@@ -236,7 +209,6 @@
 \NewInfoField{twitter}{\faIcon{twitter}}[https://twitter.com/]
 \NewInfoField{linkedin}{\faIcon{linkedin}}[https://linkedin.com/in/]
 \NewInfoField{github}{\faIcon{github}}[https://github.com/]
-% Use fontawesome5 for Orcid symbol
 \NewInfoField{orcid}{\faIcon{orcid}}[https://orcid.org/]
 \NewInfoField{location}{\cvLocationMarker}
 
@@ -358,62 +330,6 @@
 \clipbox*{{.5\width} -0.25ex {\width} {\totalheight}}{\color{body!30}\cvRatingMarker}}
 {\ifdimgreater{\x bp}{#2 bp}{\color{body!30}}{\color{accent}}\cvRatingMarker}%
 }\EndAccSupp{}\par%
-}
-
-% Adapted from @Jake's answer at http://tex.stackexchange.com/a/82729/226
-\newcommand{\wheelchart}[4][0]{%
-  \begingroup\centering
-  \def\innerradius{#3}%
-  \def\outerradius{#2}%
-  % Calculate total
-  \pgfmathsetmacro{\totalnum}{0}%
-  \foreach \value/\colour/\name in {#4} {%
-      \pgfmathparse{\value+\totalnum}%
-      \global\let\totalnum=\pgfmathresult%
-    }%
-  \begin{tikzpicture}
-
-    % Calculate the thickness and the middle line of the wheel
-    \pgfmathsetmacro{\wheelwidth}{\outerradius-\innerradius}
-    \pgfmathsetmacro{\midradius}{(\outerradius+\innerradius)/2}
-    \pgfmathsetmacro{\totalrot}{-90 + #1}
-
-    % Rotate so we start from the top
-    \begin{scope}[rotate=\totalrot]
-
-      % Loop through each value set. \cumnum keeps track of where we are in the wheel
-      \pgfmathsetmacro{\cumnum}{0}
-      \foreach \value/\width/\colour/\name in {#4} {
-          \pgfmathsetmacro{\newcumnum}{\cumnum + \value/\totalnum*360}
-
-          % Calculate the percent value
-          \pgfmathsetmacro{\percentage}{\value/\totalnum*100}
-          % Calculate the mid angle of the colour segments to place the labels
-          \pgfmathsetmacro{\midangle}{-(\cumnum+\newcumnum)/2}
-
-          % This is necessary for the labels to align nicely
-          \pgfmathparse{
-            (-\midangle>180?"west":"east")
-          } \edef\textanchor{\pgfmathresult}
-          \pgfmathparse{
-            (-\midangle>180?"flush left":"flush right")
-          } \edef\textalign{\pgfmathresult}
-          \pgfmathsetmacro\labelshiftdir{1-2*(-\midangle<180)}
-
-          % Draw the color segments. Somehow, the \midrow units got lost, so we add 'pt' at the end. Not nice...
-          \filldraw[draw=white,fill=\colour] (-\cumnum:\outerradius) arc (-\cumnum:-(\newcumnum):\outerradius) --
-          (-\newcumnum:\innerradius) arc (-\newcumnum:-(\cumnum):\innerradius) -- cycle;
-
-          % Draw the data labels
-          % v1.6: Use accsupp so that the numeric number is copied/pasted too
-          \draw  [*-,thin,emphasis] node [append after command={(\midangle:\midradius pt) -- (\midangle:\outerradius + 1ex) -- (\tikzlastnode)}] at (\midangle:\outerradius + 1ex) [xshift=\labelshiftdir*0.5cm,inner sep=1ex, outer sep=0pt, text width=\width,anchor=\textanchor,align=\textalign,font=\small,text=body]{\BeginAccSupp{method=pdfstringdef,ActualText={\name: \value}}\name\EndAccSupp{}};
-          % Set the old cumulated angle to the new value
-          \global\let\cumnum=\newcumnum
-        }
-    \end{scope}
-    %      \draw[gray] (0,0) circle (\outerradius) circle (\innerradius);
-  \end{tikzpicture}\par
-  \endgroup
 }
 
 \newcommand{\cvref}[3]{%
