@@ -49,21 +49,7 @@
 
 \RequirePackage{xcolor}
 
-\if@withhyper
-  \AtBeginDocument{%
-    % Custom colors
-    \definecolor{linkcolor}{HTML}{4586FF} % Link color
-
-    \hypersetup{
-        colorlinks=true,
-        linkcolor=linkcolor,
-        filecolor=linkcolor,
-        urlcolor=linkcolor,
-        citecolor=linkcolor
-    }
-  }
-\fi
-
+\definecolor{linkcolor}{HTML}{4586FF} % Link color
 \colorlet{accent}{blue!70!black}
 \colorlet{emphasis}{black}
 \colorlet{heading}{black}
@@ -72,6 +58,20 @@
 \colorlet{body}{black!80!white}
 \colorlet{name}{heading}
 \colorlet{tagline}{accent}
+\colorlet{link}{linkcolor}
+
+\if@withhyper
+  \AtBeginDocument{%
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=link,
+        filecolor=link,
+        urlcolor=link,
+        citecolor=link
+    }
+  }
+\fi
+
 \newcommand{\cvItemMarker}{{\small\textbullet}}
 \newcommand{\cvRatingMarker}{\large\textbf{\faIcon{circle}}}
 \let\itemmarker\cvItemMarker      % for backward compatibility
