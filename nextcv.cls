@@ -322,7 +322,7 @@
     \let\titlelist\relax
   }
   \ifstrequal{#2}{}{}{
-    \textbf{\color{accent}#2}\par
+    \textbf{\color{accent}\detokenize{[ #2 ]}}\par
     \smallskip
   }
   \ifstrequal{#3}{}{}{%
@@ -363,7 +363,7 @@
 }
 
 \newcommand{\cvtagheader}[1]{
-  \textcolor{emphasis}{\bfseries#1}\\
+  \large\textcolor{emphasis}{\bfseries#1}\par
   \medskip%
 }
 
@@ -374,7 +374,7 @@
 % Use accsupp so that the actual numeric value is copied/pasted
 %       and also support 0.5, 1.5, 2.5, 3.5, 4.5
 \newcommand{\cvskill}[2]{%
-\textcolor{emphasis}{\textbf{#1}}\hfill
+{#1}\hfill
 \BeginAccSupp{method=plain,ActualText={#2}}
 \foreach \x in {1,...,5}{%
   \ifdimequal{\x pt - #2 pt}{0.5pt}%
