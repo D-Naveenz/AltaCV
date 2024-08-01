@@ -349,8 +349,8 @@
 % adds accsupp for the icon as well
 \newcommand{\cvcert}[3]{%
   \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
-    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{\cvCertificateMarker}: }}\cvCertificateMarker\EndAccSupp{}} & \bfseries\href{#2}{\textcolor{emphasis}{#1}} \\
-    & \small{#3}
+    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{\cvCertificateMarker}: }}\cvCertificateMarker\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#1} \\
+    & \small{\href{#2}{#3}}
   \end{tabularx}%
   \smallskip
 }
