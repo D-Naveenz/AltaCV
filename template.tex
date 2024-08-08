@@ -11,6 +11,7 @@
 %% version 2003/12/01 or later.
 %%%%%%%%%%%%%%%%
 
+% Set PDF/A standard
 \DocumentMetadata{pdfstandard=A-2a, pdfversion=1.7, lang=en}
 %% Use the "normalphoto" option if you want a normal photo instead of cropped to a circle
 % \documentclass[10pt,a4paper,normalphoto]{nextcv}
@@ -42,16 +43,20 @@
 % Change the colours if you want to
 \definecolor{SlateGrey}{HTML}{2E2E2E}
 \definecolor{LightGrey}{HTML}{666666}
-\definecolor{DarkPastelRed}{HTML}{450808}
-\definecolor{PastelRed}{HTML}{8F0D0D}
-\definecolor{GoldenEarth}{HTML}{E7D192}
+\definecolor{AstrosNavy}{HTML}{002D62}
+\definecolor{EvertonBlue}{HTML}{003399}
+\definecolor{Cerulean}{HTML}{2A52BE}
+\definecolor{DodgerBlue}{HTML}{1E90FF}
+\definecolor{UranianBlue}{HTML}{AFDBF5}
+
 \colorlet{name}{black}
-\colorlet{tagline}{PastelRed}
-\colorlet{heading}{DarkPastelRed}
-\colorlet{headingrule}{GoldenEarth}
-\colorlet{subheading}{PastelRed}
-\colorlet{accent}{PastelRed}
+\colorlet{tagline}{EvertonBlue}
+\colorlet{heading}{AstrosNavy}
+\colorlet{headingrule}{UranianBlue}
+\colorlet{subheading}{Cerulean}
+\colorlet{accent}{EvertonBlue}
 \colorlet{emphasis}{SlateGrey}
+\colorlet{link}{DodgerBlue}
 \colorlet{body}{LightGrey}
 
 % Change some fonts, if necessary
@@ -93,6 +98,9 @@
 %% \addbibresource{sample.bib}
 
 \begin{document}
+%% ChkTeX will complain about wrong length of dashes. You can ignore it. or use {-} instead of -.
+%% https://tex.stackexchange.com/a/687676
+
 \name{Your Name Here}
 \tagline{Your Position or Tagline Here}
 %% You can add multiple photos on the left or right
@@ -101,13 +109,14 @@
 \personalinfo{%
   % Not all of these are required!
   \email{your_name@email.com}
-  \phone{000--00--0000}
+  \phone{000{-}00{-}0000}
   \mailaddress{Address, Street, 00000 Country}
-  \location{Location, COUNTRY}
+  % \location{Location, COUNTRY}
   \homepage{www.homepage.com}
-  \twitter{@xhandle}
   \linkedin{your_id}
   \github{your_id}
+  \medium{@medium_handle}
+  \twitter{xhandle}
   \orcid{0000--0000--0000--0000}
   %% You can add your own arbitrary detail with
   %% \printinfo{symbol}{detail}[optional hyperlink prefix]
@@ -116,17 +125,6 @@
   %% \NewInfoFiled{fieldname}{symbol}[optional hyperlink prefix] and use it:
   % \NewInfoField{gitlab}{\faGitlab}[https://gitlab.com/]
   % \gitlab{your_id}
-  %%
-  %% For services and platforms like Mastodon where there isn't a
-  %% straightforward relation between the user ID/nickname and the hyperlink,
-  %% you can use \printinfo directly e.g.
-  % \printinfo{\faMastodon}{@username@instace}[https://instance.url/@username]
-  %% But if you absolutely want to create new dedicated info fields for
-  %% such platforms, then use \NewInfoField* with a star:
-  % \NewInfoField*{mastodon}{\faMastodon}
-  %% then you can use \mastodon, with TWO arguments where the 2nd argument is
-  %% the full hyperlink.
-  % \mastodon{@username@instance}{https://instance.url/@username}
 }
 
 \makecvheader%
@@ -141,75 +139,84 @@
 \begin{paracol}{2}
 \cvsection{Experience}
 
-\cvevent{Job Title 1}{Company 1}{Month 20XX --- Ongoing}{Location}
-\begin{itemize}
-\item Job description 1
-\item Job description 2
-\end{itemize}
+\cvevent{Job Title 1}{Company}{Month 20XX --- Ongoing}{Location}
+\cvsubproject{Your Project}{Your Role}{}{%
+  \begin{itemize}%
+  \item Project description 1
+  \item Project description 2
+  \end{itemize}%
+}{C\#, {.NET}, SQLite}%
+
+\cvsectionspace%
+
+
+\cvsection{Education}
+
+\cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 --- June 2006}{Location}
+Thesis title: Wonderful Research
 
 \divider%
 
-\cvevent{Job Title 2}{Company 2}{Month 20XX --- Ongoing}{Location}
-\begin{itemize}
-\item Job description 1
-\item Job description 2
-\end{itemize}
-
-\medskip
-
-
-\cvsection{Projects}
-
-\cvproject{Name1, Project title in descriptive format}
-{Techstack (Java, React.js)}{Apr 2023 --- Ongoing}{https://github.com/you/your-repository}
-\begin{itemize}
-  \item Project description 1
-  \item Project description 3
-\end{itemize}
+\cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 --- June 2002}{Location}
 
 \divider%
 
-\cvproject{Name2, Supply Chain Management system for multibranch pharmaceuticals}
-{Java, React.js}{Apr 2023 --- Ongoing}{https://github.com/you/your-repository}
+\cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 --- June 2001}{Location}
+Final Year Project: \textit{(Group Project)}\\
 \begin{itemize}
-  \item Project description 1
-  \item Project description 3
+\item \textbf{Title:} \textit{Project Title}
+\item \textbf{Role:} \textit{Your role}
+\item \textbf{Grade:} \textit{A+}
 \end{itemize}
 
-\medskip
-
-
-\cvsection{Certifications}
-
-\cvcert{Certificate 1}{https://certificate/link/1}{Issuing Organization}
-
-\medskip
-
-\cvcert{Certificate 2}{https://certificate/link/2}{Issuing Organization}
-
+\cvsectionspace%
 
 % use ONLY \newpage if you want to force a page break for
 % ONLY the current column
 \newpage
 
+\cvsection{Projects}
+
+\cvproject{Name 1, Customer experience optimizer and sales management system}
+{Your Role}{https://github.com/you/your-repository}{%
+  \begin{itemize}%
+    \item Project description 1
+    \item Project description 2
+  \end{itemize}%
+}{ASP.NET, Vue.js, Node.js, MS SQL}%
+
+\divider%
+
+\cvproject{Name 2, Project title in descriptive format}
+{}{https://github.com/you/your-repository}{%
+  \begin{itemize}%
+    \item Project description 1
+    \item Project description 2
+  \end{itemize}%
+}{Java, React.js}%
+
+\cvsectionspace%
+
 
 \cvsection{Open-Source Contributions}
 
 \cvproject{Name1, Project title in descriptive format}
-{Techstack (Java, React.js)}{Apr 2023 --- Ongoing}{https://github.com/you/your-repository}
-\begin{itemize}
-  \item Project description 1
-  \item Project description 3
-\end{itemize}
+{}{https://github.com/you/your-repository}{%
+  \begin{itemize}%
+    \item Project description 1
+    \item Project description 2
+  \end{itemize}%
+}{Java, React.js}%
 
 \divider%
 
 \cvproject{Name2, Project title in descriptive format}
-{Techstack (Java, React.js)}{Apr 2023 --- Ongoing}{https://github.com/you/your-repository}
-\begin{itemize}
-  \item Project description 1
-  \item Project description 3
-\end{itemize}
+{}{https://github.com/you/your-repository}{%
+  \begin{itemize}%
+    \item Project description 1
+    \item Project description 2
+  \end{itemize}%
+}{Java, React.js}%
 
 %%% ==============================================================================================================
 %% Switch to the right column. This will now automatically move to the second
@@ -220,56 +227,102 @@
 
 A brief statement (2--3 sentences) highlighting your key qualifications, experience, and career goals.
 
-\medskip
-
-
-\cvsection{Education}
-
-\cvevent{Ph.D.\ in Your Discipline}{Your University}{Sept 2002 --- June 2006}{}
-Thesis title: Wonderful Research
-
-\divider%
-
-\cvevent{M.Sc.\ in Your Discipline}{Your University}{Sept 2001 --- June 2002}{}
-
-\divider%
-
-\cvevent{B.Sc.\ in Your Discipline}{Stanford University}{Sept 1998 --- June 2001}{}
-
-\medskip
+\cvsectionspace%
 
 
 \cvsection{Skills}
 
+\cvtagheader{Cloud Technologies}
+\cvskill{Azure}{4.5} %% Supports X.5 values.
+\cvtag{Virtual Machines}
+\cvtag{Azure DevOps}\\
+\cvtag{Azure Cosmos DB}
+
+\bigskip%
+
+\cvskill{AWS}{3} %% Supports X.5 values.
+\cvtag{EC2}
+\cvtag{RDS}
+
+\bigskip%
+
+\cvskill{GCP}{4} %% Supports X.5 values.
+\cvtag{BigQuery}
+\cvtag{Dataproc}
+\cvtag{Databrics}
+
+\divider\smallskip%
+
 \cvtagheader{Languages}
-\cvskill{Java}{4.5} %% Supports X.5 values.
-\medskip%
-\cvskill{python}{5}
-\medskip%
-\cvskill{C++}{4}
+\cvtag{Python}
+\cvtag{C\#}
+\cvtag{SQL}
+\cvtag{Java}\\
+\cvtag{Javascript}
+\cvtag{C++}
 
 \divider\smallskip
 
 \cvtagheader{Frameworks \& Libraries}
-\cvtag{C++}
-\cvtag{Embedded Systems}\\
-\cvtag{Statistical Analysis}
+\cvtag{Apache Spark}
+\cvtag{Pandas}
+\cvtag{NumPy}\\
+\cvtag{.NET}
+\cvtag{ASP.NET}
+\cvtag{Entity Framework}\\
+\cvtag{Microsoft Community Toolkit}
+\cvtag{WinUI}\\
+\cvtag{Spring-boot}
+\cvtag{Vue.js}
+\cvtag{Unity}
 
 \divider\smallskip
 
-\cvtagheader{Technologies}
-\cvtag{C++}
-\cvtag{Embedded Systems}\\
-\cvtag{Statistical Analysis}
+% ONLY the current column
+% \newpage
+
+\cvtagheader{Databases}
+\cvtag{PostgreSQL}
+\cvtag{MySQL}\\
+\cvtag{MS SQL Server}
+
+\divider\smallskip
+
+\cvtagheader{Big Data Technologies}
+\cvtag{Databricks}
+\cvtag{Hive}
+\cvtag{Airflow}
+
+\divider\smallskip
+
+\cvtagheader{VCS}
+\cvtag{Git}
+\cvtag{GitHub}
+\cvtag{Bitbucket}\\
+\cvtag{Azure DevOps}
 
 \divider\smallskip
 
 \cvtagheader{Tools}
-\cvtag{C++}
-\cvtag{Embedded Systems}\\
-\cvtag{Statistical Analysis}
+\cvtag{Jupyter Notebooks}
+\cvtag{PyCharm}\\
+\cvtag{Visual Studio \& Code}
+\cvtag{Docker}
+\cvtag{Jira}
+\cvtag{Confluence}
 
-\medskip
+\cvsectionspace%
+
+
+\cvsection{Certifications}
+
+\cvcert{Certificate 1}{https://certificate/link/1}{Issuing Organization}
+
+\medskip%
+
+\cvcert{Certificate 2}{https://certificate/link/2}{Issuing Organization}
+
+\cvsectionspace%
 
 
 \cvsection{Archivements}
@@ -288,18 +341,17 @@ Thesis title: Wonderful Research
 %% Yeah I didn't spend too much time making all the
 %% spacing consistent... sorry. Use \smallskip, \medskip,
 %% \bigskip, \vspace etc to make adjustments.
-\medskip
+\cvsectionspace%
 
 
 \cvsection{Referees}
 
-\cvref{name}{email}{mailing address}
-\cvref{Prof.\ Alpha Beta}{Institute}{a.beta@university.edu}
+\cvref{Prof.\ Alpha Beta}{Role}{Institute}{a.beta@university.edu}
 {Address Line 1\\Address line 2}
 
 \divider%
 
-\cvref{Prof.\ Gamma Delta}{Institute}{g.delta@university.edu}
+\cvref{Prof.\ Gamma Delta}{Role}{Institute}{g.delta@university.edu}
 {Address Line 1\\Address line 2}
 
 

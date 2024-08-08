@@ -132,23 +132,21 @@ In **Windows**,
 
 ### Requirements and Compilation
 
-* Use `latexmk` *(or `pdflatex + biber + pdflatex`)*
-* NextCV uses [`fontawesome5`](http://www.ctan.org/pkg/fontawesome5).
+* Use `latexmk (xelatex)` *(or `xelatex`)*
+* NextCV uses [`fontawesome6`](https://github.com/D-Naveenz/fontawsome6-latex).
 * Use the `normalphoto` option to get normal (i.e. non-circular) photos.
 * You can add multiple photos on the left or right: `\photoL{2cm}{logo1}` and `\photoR{2.5cm}{logo2,photo}`. (`\photo` will work like `\photoR`.) Separate your image filenames with commas _without_ spaces.
 * Use the `ragged2e` option to activate hyphenations while keeping text left-justified; line endings will thus be less jagged and more aesthetically pleasing.
 * The `withhyper` document class option will make the "personal info" fields into clickable hyperlinks (where it makes sense). See below for more details.
-* Can now be compiled with pdflatex, XeLaTeX and LuaLaTeX!
-  * Note that to compile with XeLaTeX, you should use a command line as follows, per [the `pdfx` documentation](http://mirrors.ctan.org/macros/latex/contrib/pdfx/pdfx.pdf): `xelatex -shell-escape -output-driver="xdvipdfmx -z 0" sample.tex`
-* The samples here use the [Lato](http://www.latofonts.com/lato-free-fonts/) and [Roboto Slab fonts](https://github.com/googlefonts/robotoslab). Feel free to use a different typeface package instead—often a different typeface will change the entire CV's feel.
+* Can now be compiled with XeLaTeX and LuaLaTeX!
+  * Note that to compile with XeLaTeX, you should use a command line as follows, `xelatex -shell-escape -output-driver="xdvipdfmx -z 0" sample.tex`
+* The samples here use the [Lato](http://www.latofonts.com/lato-free-fonts/) and [Exo 2](https://fonts.google.com/specimen/Exo+2). Feel free to use a different typeface package instead—often a different typeface will change the entire CV's feel.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 ### Template file
-
-This file was first created as `sample-alt.tex` on 2 Feb 2020. **It is the default sample LaTeX file since 10 May 2020.**
 
 Many users have overlooked the optional argument of `\cvsection` to insert the right sidebar contents, and often confused that the right sidebar doesn't automatically break across pages. This new layout uses the `paracol` package for typesetting the left and right columns that _can_ break across pages. It also makes changing the column widths easier:
 
@@ -239,7 +237,7 @@ then you can use `\mastodon` with TWO arguments where the 2nd argument is the fu
 ### Configurable colours
 
 Use `\colorlet` or `\definecolor` to change these; see examples 
-in preamble of `sample.tex`.
+in preamble of `template.tex`.
 * `accent`
 * `emphasis`
 * `heading`

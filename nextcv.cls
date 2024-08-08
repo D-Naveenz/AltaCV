@@ -32,10 +32,8 @@
 \RequirePackage{etoolbox}
 \RequirePackage{accsupp}
 \RequirePackage[margin=2cm]{geometry}
-%% added fontawesome6 for more icons
-\RequirePackage{fontawesome/6}
-\RequirePackage{ifxetex,ifluatex}
-% \RequirePackage{scrlfile}
+\RequirePackage{fontawesome/6}  %% added fontawesome6 for more icons
+\RequirePackage{scrlfile}
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
 \RequirePackage{setspace}
@@ -43,27 +41,8 @@
 \RequirePackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
 
-\if@raggedtwoe
-  \RequirePackage[newcommands]{ragged2e}
-\fi
-
 \RequirePackage{xcolor}
-
-\if@withhyper
-  \AtBeginDocument{%
-    % Custom colors
-    \definecolor{linkcolor}{HTML}{4586FF} % Link color
-
-    \hypersetup{
-        colorlinks=true,
-        linkcolor=linkcolor,
-        filecolor=linkcolor,
-        urlcolor=linkcolor,
-        citecolor=linkcolor
-    }
-  }
-\fi
-
+%% Define the color scheme
 \colorlet{accent}{blue!70!black}
 \colorlet{emphasis}{black}
 \colorlet{heading}{black}
@@ -72,6 +51,24 @@
 \colorlet{body}{black!80!white}
 \colorlet{name}{heading}
 \colorlet{tagline}{accent}
+\colorlet{link}{blue}
+
+\if@raggedtwoe
+  \RequirePackage[newcommands]{ragged2e}
+\fi
+
+\if@withhyper
+  \AtBeginDocument{%
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=link,
+        filecolor=link,
+        urlcolor=link,
+        citecolor=link
+    }
+  }
+\fi
+
 \newcommand{\cvItemMarker}{{\small\textbullet}}
 \newcommand{\cvRatingMarker}{\large\textbf{\faIcon{circle}}}
 \let\itemmarker\cvItemMarker      % for backward compatibility
@@ -80,8 +77,11 @@
 \newcommand{\cvLocationMarker}{\textbf{\faIcon{location-dot}}}
 \newcommand{\cvCertificateMarker}{\textbf{\faIcon{certificate}}}
 \newcommand{\cvProjectLinkMarker}{\faIcon{github}}
+\newcommand{\cvProjectRoleMarker}{\textbf{\faIcon{user}}}
+\newcommand{\cvProjectMarker}{\textbf{\faIcon{folder-tree}}}
 \newcommand{\locationname}{Location}
 \newcommand{\datename}{Date}
+\newcommand{\rolename}{Role}
 \newcommand{\projectlink}{Project Link}
 
 \RequirePackage{tikz}
@@ -90,11 +90,14 @@
 \RequirePackage[inline]{enumitem}
 \setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0.25\baselineskip,after=\vspace{0.25\baselineskip}}
 \setlist[itemize]{label=\cvItemMarker}
-% \RequirePackage{graphicx}
 \RequirePackage{trimclip}
 \RequirePackage{dashrule}
 \RequirePackage{multirow,tabularx}
 \RequirePackage{changepage}
+\RequirePackage{graphicx}
+\RequirePackage{adjustbox}
+\RequirePackage{listofitems} % String splitter
+\RequirePackage{array}
 
 \setlength{\parindent}{0pt}
 \newcommand{\divider}{\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\medskip}
@@ -211,11 +214,15 @@
 \NewInfoField{mailaddress}{\faIcon{envelope}}
 \NewInfoField{phone}{\textbf{\faIcon{phone}}}[tel:]
 \NewInfoField{homepage}{\textbf{\faIcon{globe}}}[https://]
-\NewInfoField{twitter}{\faIcon{x-twitter}}[https://x.com/]
+\NewInfoField{twitter}{\faIcon{x-twitter}}[https://x.com/]  %% twitter -> x
 \NewInfoField{linkedin}{\faIcon{linkedin}}[https://linkedin.com/in/]
 \NewInfoField{github}{\faIcon{github}}[https://github.com/]
+\NewInfoField{medium}{\faIcon{medium}}[https://medium.com/]
 \NewInfoField{orcid}{\faIcon{orcid}}[https://orcid.org/]
 \NewInfoField{location}{\cvLocationMarker}
+
+%% spaces
+\newcommand{\cvsectionspace}{\vspace{20pt}}
 
 % Support for multiple photos
 \newlength{\nextcv@photos@width}
@@ -227,9 +234,18 @@
 \newcommand{\@makeaphoto}[2]{%
   \begin{minipage}{#1}%
     \if@normalphoto
-      \includegraphics[width=\linewidth]{#2}
+      \adjustbox{frame, fboxrule=2pt, fboxsep=0pt, margin=2pt, bgcolor=white}{%
+        \adjustbox{frame, fboxrule=4pt, fboxsep=0pt, bgcolor=white}{%
+          \includegraphics[width=\linewidth]{#2}%
+        }%
+      }%
     \else
-      \tikz\path[fill overzoom image={#2}]circle[radius=0.5\linewidth];
+      \begin{tikzpicture}
+        \clip (0,0) circle (0.55\linewidth);
+        \node at (0,0) {\includegraphics[width=1.05\linewidth]{#2}};
+        \draw[line width=3pt, color=accent] (0,0) circle (0.53\linewidth); % Inner border
+        \draw[line width=2pt, color=headingrule] (0,0) circle (0.55\linewidth); % Outer border
+      \end{tikzpicture}
     \fi%
   \end{minipage}%
 }
@@ -276,15 +292,17 @@
     {\setstretch{1.5}\personalinfofont\@personalinfo\par}
   \end{minipage}\hfill%
   \nextcv@right@photos\par%
-  \endgroup\medskip
+  \vspace{12pt}
+  \divider%
+  \endgroup\smallskip%
 }
 
 \renewenvironment{quote}{\color{accent}\itshape\large}{\par}
 
 \newcommand{\cvsection}[2][]{%
-\nointerlineskip\bigskip%  %% bugfix in v1.6.2
+\nointerlineskip\bigskip%
 \ifstrequal{#1}{}{}{\marginpar{\vspace*{\dimexpr1pt-\baselineskip}\raggedright\input{#1}}}%
-{\color{heading}\cvsectionfont\MakeUppercase{#2}}\\[-1ex]%
+{\colorbox{headingrule}{\color{heading}\cvsectionfont\MakeUppercase{#2}}}\\[-1.7ex]%
 {\color{headingrule}\rule{\linewidth}{2pt}\par}\medskip
 }
 
@@ -294,64 +312,116 @@
 }
 
 \newcommand{\cvevent}[4]{%
-  {\large\color{emphasis}#1\par}
+  {\large\bfseries\color{emphasis}#1\par}
   \smallskip\normalsize
   \ifstrequal{#2}{}{}{
-    \textbf{\color{accent}#2}\par
+    \textbf{\color{subheading}#2}\par
     \smallskip}
   \ifstrequal{#3}{}{}{%
-    {\small\makebox[0.5\linewidth][l]%
+    {\small\color{emphasis}\makebox[0.5\linewidth][l]%
         {\BeginAccSupp{method=pdfstringdef,ActualText={\datename:}}\cvDateMarker\EndAccSupp{}%
           ~\normalfont#3}%
       }}%
   \ifstrequal{#4}{}{}{%
-    {\small\makebox[0.5\linewidth][l]%
+    {\small\color{emphasis}\makebox[0.5\linewidth][r]%
         {\BeginAccSupp{method=pdfstringdef,ActualText={\locationname:}}\cvLocationMarker\EndAccSupp{}%
           ~\normalfont#4}%
       }}\par
   \medskip\normalsize
 }
 
-\RequirePackage{listofitems} % String splitter
-\newcommand{\cvproject}[4]{%
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\cvproject}[5]{%
+  %% Header
   {
     \setsepchar{,}%  
     \readlist*\titlelist{#1}%
-    \begin{tabularx}{\columnwidth}{@{}l | >{\raggedright\arraybackslash}X@{}}
-      \large\textcolor{emphasis}{\textbf{\titlelist[1]}} & \textcolor{emphasis}{\titlelist[2]} \\
-    \end{tabularx}\par
+    %% Check tiltlelist has more than 1 elements
+    \ifnum\titlelistlen>1
+    \begin{tabularx}{\columnwidth}{@{}l | Y@{}}
+        \large\textcolor{subheading}{\textbf{\titlelist[1]}} & \textcolor{emphasis}{\textbf{\titlelist[2]}} \\
+      \end{tabularx}\par
+    \else
+      \large\textcolor{emphasis}{\textbf{#1}}\par
+    \fi
     \smallskip\normalsize
     \let\titlelist\relax
   }
-  \ifstrequal{#2}{}{}{
-    \textbf{\color{accent}\detokenize{[ #2 ]}}\par
-    \smallskip
-  }
-  \ifstrequal{#3}{}{}{%
-    {\small\makebox[0.5\linewidth][l]%
-      {\BeginAccSupp{method=pdfstringdef,ActualText={\datename:}}\cvDateMarker\EndAccSupp{}%
-      ~\normalfont#3}%
+  %% Role
+  {%
+    {\small\color{emphasis}\makebox[0.5\linewidth][l]%
+      {\BeginAccSupp{method=pdfstringdef,ActualText={\rolename:}}\cvProjectRoleMarker\EndAccSupp{}%
+      ~\normalfont\ifstrequal{#2}{}{Personal Project}{#2}}%
     }%
   }%
-  \ifstrequal{#4}{}{}{%
+  %% Project Link
+  \ifstrequal{#3}{}{}{%
     % The parsing-separator⟨delimiter⟩“/” is reserved by default for nested lists
     %  To set “/” as the ⟨parsing-separator⟩ for a simple list, it is necessary, using the optional argument
     \setsepchar[,]{/}%
-    \readlist*\urllist{#4}%
-    {\small\makebox[0.5\linewidth][l]%
+    \readlist*\urllist{#3}%
+    {\small\color{emphasis}\makebox[0.5\linewidth][r]%
         {\BeginAccSupp{method=pdfstringdef,ActualText={\projectlink:}}\cvProjectLinkMarker\EndAccSupp{}%
-          ~\normalfont\href{#4}{GitHub: \urllist[-1]}}%
+          ~\normalfont\href{#3}{\textbf{GitHub: }\urllist[-1]}}%
     }%
     \let\urllist\relax
-  }\par
+  }\par\smallskip
+  %% Description
+  \ifstrequal{#4}{}{}{%
+    \smallskip
+    \small{#4}
+  }
+  %% Technologies
+  \ifstrequal{#5}{}{}{%
+    \smallskip
+    \textcolor{emphasis}{\textbf{Technologies: }} #5
+  }
+  \medskip\normalsize
+}
+
+\newcommand{\cvsubproject}[5]{%
+  \smallskip
+  \begin{spacing}{1.5}
+    {%
+      \small\color{emphasis}%
+      \begin{tabularx}{\columnwidth}{@{}m{1.2em} @{\hspace{1ex}} Y@{}}
+        %% Project
+        \BeginAccSupp{method=pdfstringdef,ActualText={\detokenize{[project icon]}}}\cvProjectMarker\EndAccSupp{} & \textbf{Project: }#1 \\
+        %% Role
+        \BeginAccSupp{method=pdfstringdef,ActualText={\detokenize{[role icon]}}}\cvProjectRoleMarker\EndAccSupp{} & \textbf{Role: }\ifstrequal{#2}{}{Personal Project}{#2} \\
+      \end{tabularx}\par%
+      %% Project Link
+      \ifstrequal{#3}{}{}
+      {%
+        % The parsing-separator⟨delimiter⟩“/” is reserved by default for nested lists
+        %  To set “/” as the ⟨parsing-separator⟩ for a simple list, it is necessary, using the optional argument
+        \setsepchar[,]{/}%
+        \readlist*\urllist{#3}%
+        \begin{tabularx}{\columnwidth}{@{}m{1.2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
+          \BeginAccSupp{method=pdfstringdef,ActualText={\detokenize{[github icon]}}}\cvProjectLinkMarker\EndAccSupp{} & \href{#3}{\textbf{GitHub: }\urllist[-1]} \\
+        \end{tabularx}%
+        \let\urllist\relax
+      }%
+    }%
+  \end{spacing}
+  %% Description
+  \ifstrequal{#4}{}{}{%
+    \smallskip
+    \small{#4}
+  }
+  %% Technologies
+  \ifstrequal{#5}{}{}{%
+    \smallskip
+    \textcolor{emphasis}{\textbf{Technologies: }} #5
+  }
   \medskip\normalsize
 }
 
 % adds accsupp for the icon as well
 \newcommand{\cvcert}[3]{%
   \begin{tabularx}{\columnwidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
-    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{\cvCertificateMarker}: }}\cvCertificateMarker\EndAccSupp{}} & \bfseries\href{#2}{\textcolor{emphasis}{#1}} \\
-    & \small{#3}
+    \multirow{2}{*}{\Large\color{accent}\BeginAccSupp{method=escape,ActualText={\detokenize{\cvCertificateMarker}: }}\cvCertificateMarker\EndAccSupp{}} & \bfseries\textcolor{emphasis}{#1} \\
+    & \small{\href{#2}{#3}}
   \end{tabularx}%
   \smallskip
 }
@@ -365,7 +435,7 @@
 }
 
 \newcommand{\cvtagheader}[1]{
-  \large\textcolor{emphasis}{\bfseries#1}\par
+  {\large\textcolor{emphasis}{\bfseries#1}}\par%
   \medskip%
 }
 
@@ -376,7 +446,7 @@
 % Use accsupp so that the actual numeric value is copied/pasted
 %       and also support 0.5, 1.5, 2.5, 3.5, 4.5
 \newcommand{\cvskill}[2]{%
-{#1}\hfill
+{\color{emphasis}#1}\hfill
 \BeginAccSupp{method=plain,ActualText={#2}}
 \foreach \x in {1,...,5}{%
   \ifdimequal{\x pt - #2 pt}{0.5pt}%
@@ -388,15 +458,16 @@
   {\ifdimgreater{\x bp}{#2 bp}{\color{body!30}}{\color{accent}}{\cvRatingMarker}}%
   \hspace{1em}% Add space between markers (adjust the value as needed)
 }%
-\EndAccSupp{}\par%
+\EndAccSupp{}\par\vspace{1ex}%
 }
 
-\newcommand{\cvref}[3]{%
+\newcommand{\cvref}[4]{%
   \smallskip
   \textcolor{emphasis}{\textbf{#1}}\par
+  \textbf{\color{subheading}#2}\par
   \begin{description}[font=\color{accent},style=multiline,leftmargin=1.35em,align=left]
-    \item[\small\normalfont\emailsymbol] #2
-    \item[\small\normalfont\mailaddresssymbol] #3
+    \item[\small\normalfont\textbf{\faIcon{briefcase}}] #3
+    \item[\small\normalfont\faIcon{at}] #4
   \end{description}
   %   \medskip
 }
